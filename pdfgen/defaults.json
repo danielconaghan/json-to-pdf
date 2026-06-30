@@ -1,0 +1,51 @@
+{
+  "document": {
+    "title": "",
+    "author": "",
+    "subject": "",
+    "keywords": [],
+    "page": {
+      "size": "A4",
+      "orientation": "portrait",
+      "margins": { "top": 72, "bottom": 72, "left": 72, "right": 72 }
+    }
+  },
+  "fonts": [],
+  "styles": {
+    "h1":           { "font": "Helvetica-Bold", "size": 24, "color": "#1a1a2e", "leading": 28, "space_before": 24, "space_after": 8 },
+    "h2":           { "extends": "h1", "size": 18, "leading": 22, "space_before": 18 },
+    "h3":           { "extends": "h1", "size": 14, "leading": 18, "space_before": 14 },
+    "body":         { "font": "Helvetica",      "size": 11, "color": "#333333", "leading": 16, "space_before": 0,  "space_after": 8 },
+    "caption":      { "extends": "body",        "size": 9,  "color": "#888888" },
+    "table_header": { "extends": "body",        "font": "Helvetica-Bold", "color": "#ffffff" },
+    "toc_h1":       { "extends": "body",        "font": "Helvetica-Bold" },
+    "toc_h2":       { "extends": "body",        "left_indent": 16 },
+    "toc_h3":       { "extends": "body",        "left_indent": 32, "size": 10 }
+  },
+  "cover": {
+    "title":            "",
+    "subtitle":         "",
+    "author":           "",
+    "date":             "",
+    "logo":             null,
+    "logo_align":       "left",
+    "background_color": "#1a1a2e",
+    "title_color":      "#ffffff",
+    "subtitle_color":   "#cccccc"
+  },
+  "header": {
+    "logo":      null,
+    "left":      "",
+    "center":    "",
+    "right":     "",
+    "separator": true
+  },
+  "footer": {
+    "left":      "",
+    "center":    "",
+    "right":     "",
+    "separator": true
+  },
+  "pagination": true,
+  "content": []
+}

@@ -1,0 +1,29 @@
+{
+  "document": {
+    "title": "Q2 2026 Performance Report",
+    "author": "Oxford Risk",
+    "subject": "Quarterly Performance"
+  },
+  "styles": {
+    "h1": { "color": "#003366" },
+    "h2": { "color": "#005599" }
+  },
+  "header": {
+    "left": "Oxford Risk",
+    "right": "Confidential"
+  },
+  "footer": {
+    "left": "© Oxford Risk 2026"
+  },
+  "content": [
+    { "type": "heading", "level": 1, "text": "Executive Summary" },
+    { "type": "paragraph", "text": "This report covers performance for <b>Q2 2026</b>. Overall performance exceeded benchmarks by 2.4%." },
+    { "type": "heading", "level": 2, "text": "Key Findings" },
+    { "type": "paragraph", "text": "Portfolio allocation remained within risk parameters throughout the quarter. Volatility was lower than the prior period." },
+    { "type": "heading", "level": 3, "text": "Fixed Income" },
+    { "type": "paragraph", "text": "Duration positioning contributed positively as yields fell across the curve. Credit spreads tightened in investment grade." },
+    { "type": "page_break" },
+    { "type": "heading", "level": 1, "text": "Risk Analysis" },
+    { "type": "paragraph", "text": "Value-at-Risk measures remained well within approved limits for all portfolios under management." }
+  ]
+}

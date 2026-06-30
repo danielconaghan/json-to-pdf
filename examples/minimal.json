@@ -1,0 +1,13 @@
+{
+  "document": { "title": "My First Report" },
+  "content": [
+    { "type": "heading", "level": 1, "text": "Executive Summary" },
+    { "type": "paragraph", "text": "This is a paragraph of body text. It demonstrates the default typography settings inherited from <b>defaults.json</b> without any explicit style configuration." },
+    { "type": "heading", "level": 2, "text": "Background" },
+    { "type": "paragraph", "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris." },
+    { "type": "heading", "level": 3, "text": "Detail" },
+    { "type": "paragraph", "text": "A third-level heading inherits font and colour from <i>h1</i> via the extends chain, but at a smaller size." },
+    { "type": "spacer", "height": 24 },
+    { "type": "paragraph", "text": "After an explicit spacer. The document ends here." }
+  ]
+}

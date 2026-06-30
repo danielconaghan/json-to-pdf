@@ -1,0 +1,58 @@
+{
+  "document": {
+    "title": "Oxford Risk — Q2 2026 Performance Report",
+    "author": "Oxford Risk",
+    "subject": "Quarterly Performance"
+  },
+  "styles": {
+    "h1": { "color": "#003366" },
+    "h2": { "color": "#005599" }
+  },
+  "cover": {
+    "title": "Q2 2026 Performance Report",
+    "subtitle": "Quarterly Investment Review",
+    "author": "Oxford Risk",
+    "date": "30 June 2026",
+    "logo": "../assets/DefaultLogo.png"
+  },
+  "header": {
+    "logo": "../assets/DefaultLogo.png",
+    "right": "Confidential"
+  },
+  "footer": {
+    "left": "© Oxford Risk 2026"
+  },
+  "content": [
+    { "type": "heading",    "level": 1, "text": "Executive Summary" },
+    { "type": "paragraph",  "text": "This report covers performance for <b>Q2 2026</b>. Overall portfolio performance exceeded benchmarks by 2.4% on a risk-adjusted basis. Volatility remained within approved parameters throughout the quarter." },
+    { "type": "spacer",     "height": 12 },
+    { "type": "heading",    "level": 2, "text": "Key Findings" },
+    { "type": "list",       "style": "bullet", "items": [
+        "Portfolio alpha: +2.4% vs benchmark",
+        "Maximum drawdown: -1.8% (within -5% limit)",
+        "Sharpe ratio improved from 0.82 to 1.04",
+        "All risk limits respected throughout the period"
+    ]},
+    { "type": "rule" },
+    { "type": "heading",    "level": 1, "text": "Fixed Income" },
+    { "type": "heading",    "level": 2, "text": "Duration Positioning" },
+    { "type": "paragraph",  "text": "Duration positioning contributed positively as yields fell across the curve. Investment-grade credit spreads tightened by an average of <b>18 basis points</b>." },
+    { "type": "heading",    "level": 2, "text": "Credit Quality" },
+    { "type": "paragraph",  "text": "The portfolio maintained an average credit quality of <i>AA-</i>. No defaults occurred in the investment universe during the quarter." },
+    { "type": "spacer",     "height": 8 },
+    { "type": "list",       "style": "numbered", "items": [
+        "Investment grade: 72% of fixed income allocation",
+        "High yield: 18% — within 25% strategic limit",
+        "Cash and equivalents: 10%"
+    ]},
+    { "type": "page_break" },
+    { "type": "heading",    "level": 1, "text": "Equity Exposure" },
+    { "type": "paragraph",  "text": "Equity holdings outperformed the MSCI World index by <b>310 basis points</b> over the quarter, driven primarily by sector allocation within technology and healthcare." },
+    { "type": "rule" },
+    { "type": "heading",    "level": 2, "text": "Sector Breakdown" },
+    { "type": "paragraph",  "text": "Overweight positions in defensive sectors provided downside protection during the mid-quarter volatility spike in late April." },
+    { "type": "spacer",     "height": 24 },
+    { "type": "heading",    "level": 1, "text": "Risk Management" },
+    { "type": "paragraph",  "text": "Value-at-Risk at the 99% confidence level remained below the 2.5% limit for all portfolios under management. Stress testing against the 2020 pandemic scenario showed resilience across all mandates." }
+  ]
+}

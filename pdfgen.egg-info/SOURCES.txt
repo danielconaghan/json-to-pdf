@@ -1,0 +1,16 @@
+pyproject.toml
+pdfgen/__init__.py
+pdfgen/cli.py
+pdfgen/defaults.json
+pdfgen/fonts.py
+pdfgen/merger.py
+pdfgen/renderer.py
+pdfgen/styles.py
+pdfgen.egg-info/PKG-INFO
+pdfgen.egg-info/SOURCES.txt
+pdfgen.egg-info/dependency_links.txt
+pdfgen.egg-info/entry_points.txt
+pdfgen.egg-info/requires.txt
+pdfgen.egg-info/top_level.txt
+pdfgen/elements/__init__.py
+pdfgen/templates/__init__.py

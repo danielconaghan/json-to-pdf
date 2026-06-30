@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pdfgen"
+version = "0.1.0"
+requires-python = ">=3.11"
+dependencies = [
+    "reportlab>=4.2",
+    "click>=8.1",
+    "jsonschema>=4.20",
+    "matplotlib>=3.8",
+    "Pillow>=10.0",
+]
+
+[project.scripts]
+pdfgen = "pdfgen.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["pdfgen*"]
+
+[tool.setuptools.package-data]
+pdfgen = ["defaults.json"]
