@@ -1,9 +1,9 @@
-from pathlib import Path
-
 from reportlab.lib.colors import HexColor
 from reportlab.lib.utils import ImageReader
 from reportlab.pdfgen import canvas
 from reportlab.platypus import Frame, PageTemplate
+
+from ..utils import resolve_path
 
 _HEADER_FONT = "Helvetica"
 _HEADER_SIZE = 9
@@ -18,19 +18,6 @@ _COVER_TITLE_SIZE = 32
 _COVER_SUBTITLE_SIZE = 16
 _COVER_META_SIZE = 10
 _HEADER_LOGO_HEIGHT = 20    # logo height on content-page headers
-
-
-def _resolve_path(path, base_path):
-    """Return an absolute file path, or None if the file cannot be found."""
-    if not path:
-        return None
-    p = Path(path)
-    if p.is_absolute():
-        return str(p) if p.exists() else None
-    if base_path:
-        resolved = Path(base_path) / p
-        return str(resolved) if resolved.exists() else None
-    return str(p) if p.exists() else None
 
 
 def _image_ratio(path):
@@ -141,7 +128,7 @@ def _draw_header(canv, doc, config):
     canv.saveState()
 
     # Left position: logo takes priority over text when both are set
-    logo_path = _resolve_path(header.get("logo"), base_path)
+    logo_path = resolve_path(header.get("logo"), base_path)
     if logo_path:
         dims = _image_ratio(logo_path)
         if dims:
@@ -206,7 +193,7 @@ def _draw_cover(canv, doc, config):
     right = page_w - doc.rightMargin
     bg = cover.get("background_color", "#1a1a2e")
 
-    logo_path = _resolve_path(cover.get("logo"), base_path)
+    logo_path = resolve_path(cover.get("logo"), base_path)
 
     canv.saveState()
 

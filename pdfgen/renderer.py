@@ -4,11 +4,14 @@ from reportlab.lib.colors import HexColor
 from reportlab.lib.enums import TA_CENTER, TA_JUSTIFY, TA_LEFT, TA_RIGHT
 from reportlab.lib.pagesizes import A4, LETTER, landscape
 from reportlab.lib.styles import ParagraphStyle
-from reportlab.platypus import BaseDocTemplate, NextPageTemplate, PageBreak, Paragraph
+from reportlab.platypus import NextPageTemplate, PageBreak, Paragraph
 
 from .elements.image import build_image
 from .elements.list_element import build_list
 from .elements.primitives import build_page_break, build_rule, build_spacer
+from .elements.table import build_table
+from .elements.toc import build_toc
+from .templates.doc import PDFDocTemplate
 from .templates.page import make_cover_template, make_numbered_canvas_class, make_standard_template
 
 _PAGE_SIZES = {
@@ -28,8 +31,9 @@ _ALIGN = {
 @dataclass
 class RenderContext:
     rl_styles: dict
-    doc: BaseDocTemplate
+    doc: PDFDocTemplate
     base_path: str | None
+    config: dict
 
 
 def _page_size(page_config):
@@ -60,35 +64,35 @@ def _build_rl_styles(resolved_styles):
     return {name: _build_rl_style(name, s) for name, s in resolved_styles.items()}
 
 
+def _build_paragraph(element, ctx):
+    style = ctx.rl_styles.get(element.get("style", "body")) or ctx.rl_styles.get("body")
+    return [Paragraph(element["text"], style)]
+
+
+def _build_heading(element, ctx):
+    level = element.get("level", 1)
+    style = ctx.rl_styles.get(f"h{level}") or ctx.rl_styles.get("h1")
+    p = Paragraph(element["text"], style)
+    p._toc_entry = (level - 1, element["text"])  # 0-indexed level for TableOfContents
+    return [p]
+
+
+_BUILDERS = {
+    "paragraph":  _build_paragraph,
+    "heading":    _build_heading,
+    "spacer":     lambda el, ctx: build_spacer(el),
+    "page_break": lambda el, ctx: build_page_break(el),
+    "rule":       lambda el, ctx: build_rule(el),
+    "list":       lambda el, ctx: build_list(el, ctx.rl_styles),
+    "image":      lambda el, ctx: build_image(el, ctx.rl_styles, ctx.doc, ctx.base_path),
+    "table":      lambda el, ctx: build_table(el, ctx),
+    "toc":        lambda el, ctx: build_toc(el, ctx.rl_styles),
+}
+
+
 def _render_element(element, ctx):
-    t = element.get("type")
-
-    if t == "paragraph":
-        style_name = element.get("style", "body")
-        style = ctx.rl_styles.get(style_name) or ctx.rl_styles.get("body")
-        return Paragraph(element["text"], style)
-
-    if t == "heading":
-        level = element.get("level", 1)
-        style = ctx.rl_styles.get(f"h{level}") or ctx.rl_styles.get("h1")
-        return Paragraph(element["text"], style)
-
-    if t == "spacer":
-        return build_spacer(element)
-
-    if t == "page_break":
-        return build_page_break(element)
-
-    if t == "rule":
-        return build_rule(element)
-
-    if t == "list":
-        return build_list(element, ctx.rl_styles)
-
-    if t == "image":
-        return build_image(element, ctx.rl_styles, ctx.doc, ctx.base_path)
-
-    return None
+    builder = _BUILDERS.get(element.get("type"))
+    return builder(element, ctx) if builder else []
 
 
 def render(config, output_path, base_path=None):
@@ -98,7 +102,7 @@ def render(config, output_path, base_path=None):
     doc_meta = config["document"]
     has_cover = bool(config.get("cover", {}).get("title", ""))
 
-    doc = BaseDocTemplate(
+    doc = PDFDocTemplate(
         output_path,
         pagesize=_page_size(page_cfg),
         topMargin=margins["top"],
@@ -109,6 +113,7 @@ def render(config, output_path, base_path=None):
         author=doc_meta.get("author", ""),
         subject=doc_meta.get("subject", ""),
     )
+    doc.keywords = doc_meta.get("keywords") or []
 
     templates = []
     if has_cover:
@@ -120,6 +125,7 @@ def render(config, output_path, base_path=None):
         rl_styles=_build_rl_styles(config["_resolved_styles"]),
         doc=doc,
         base_path=base_path,
+        config=config,
     )
 
     story = []
@@ -127,11 +133,11 @@ def render(config, output_path, base_path=None):
         story.extend([NextPageTemplate("standard"), PageBreak()])
 
     for element in config["content"]:
-        flowable = _render_element(element, ctx)
-        if isinstance(flowable, list):
-            story.extend(flowable)
-        elif flowable is not None:
-            story.append(flowable)
+        story.extend(_render_element(element, ctx))
 
     NumberedCanvas = make_numbered_canvas_class(config)
-    doc.build(story, canvasmaker=NumberedCanvas)
+    has_toc = any(e.get("type") == "toc" for e in config["content"])
+    if has_toc:
+        doc.multiBuild(story, canvasmaker=NumberedCanvas)
+    else:
+        doc.build(story, canvasmaker=NumberedCanvas)

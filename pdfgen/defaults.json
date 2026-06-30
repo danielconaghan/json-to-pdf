@@ -46,6 +46,24 @@
     "right":     "",
     "separator": true
   },
+  "table_style": {
+    "header_background": "#1a1a2e",
+    "header_color":      "#ffffff",
+    "header_font":       "Helvetica-Bold",
+    "header_align":      "left",
+    "body_font":         "Helvetica",
+    "body_color":        "#333333",
+    "font_size":         10,
+    "cell_padding":      8,
+    "alternate_rows":    true,
+    "alternate_color":   "#f5f7fa",
+    "grid_color":        "#dddddd",
+    "grid_thickness":    0.5,
+    "align":             "left",
+    "full_width":        true,
+    "space_before":      12,
+    "space_after":       12
+  },
   "pagination": true,
   "content": []
 }

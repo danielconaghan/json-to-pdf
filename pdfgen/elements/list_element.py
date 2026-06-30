@@ -17,11 +17,11 @@ def build_list(element, rl_styles):
         for item in items
     ]
 
-    return ListFlowable(
+    return [ListFlowable(
         list_items,
         bulletType=bullet_type,
         leftIndent=18,
         bulletFontName="Helvetica",
         bulletFontSize=10,
         start=None,
-    )
+    )]

@@ -1,0 +1,157 @@
+{
+  "document": {
+    "title": "Oxford Risk — Tables Showcase",
+    "author": "Oxford Risk",
+    "subject": "Phase 3 Table Demonstration"
+  },
+  "cover": {
+    "title": "Tables Showcase",
+    "subtitle": "Phase 3 — Tabular Data",
+    "author": "Oxford Risk",
+    "date": "30 June 2026",
+    "logo": "../assets/DefaultLogo.png"
+  },
+  "header": {
+    "logo": "../assets/DefaultLogo.png",
+    "right": "Confidential"
+  },
+  "footer": {
+    "left": "© Oxford Risk 2026"
+  },
+
+  "content": [
+
+    { "type": "heading", "level": 1, "text": "Fund Performance" },
+    { "type": "paragraph", "text": "Default table style — column widths specified, numbers right-aligned, alternating rows, header repeats on new pages." },
+
+    {
+      "type": "table",
+      "headers": ["Fund", "AUM (£m)", "Return YTD", "Return 1yr", "Volatility", "Sharpe"],
+      "column_widths": ["28%", "12%", "12%", "12%", "12%", "12%"],
+      "column_align": ["left", "right", "right", "right", "right", "right"],
+      "rows": [
+        ["Oxford Risk Growth",    "1,240", "+8.4%",  "+14.2%", "9.1%",  "1.42"],
+        ["Oxford Risk Balanced",  "  980", "+5.2%",  "+9.8%",  "6.3%",  "1.18"],
+        ["Oxford Risk Income",    "  760", "+3.1%",  "+6.4%",  "4.2%",  "0.97"],
+        ["Oxford Risk Conservative", "540","−0.3%",  "+3.1%",  "2.8%",  "0.64"],
+        ["Oxford Risk Global",   "2,100", "+11.7%", "+19.3%", "12.4%", "1.61"],
+        ["Oxford Risk EM",       "  320", "+6.8%",  "+12.1%",  "14.7%","0.82"]
+      ]
+    },
+
+    { "type": "heading", "level": 1, "text": "Asset Allocation" },
+    { "type": "paragraph", "text": "Minimal style override — just changes the header colour. All other defaults apply." },
+
+    {
+      "type": "table",
+      "headers": ["Asset Class", "Strategic Weight", "Current Weight", "Deviation"],
+      "column_widths": ["40%", "20%", "20%", "20%"],
+      "column_align": ["left", "right", "right", "right"],
+      "style": {
+        "header_background": "#003366"
+      },
+      "rows": [
+        ["Global Equities",      "45%", "47.2%", "+2.2%"],
+        ["Fixed Income",         "30%", "28.6%", "−1.4%"],
+        ["Alternatives",         "15%", "14.1%", "−0.9%"],
+        ["Real Assets",           "5%",  "5.8%", "+0.8%"],
+        ["Cash & Equivalents",    "5%",  "4.3%", "−0.7%"]
+      ]
+    },
+
+    { "type": "page_break" },
+
+    { "type": "heading", "level": 1, "text": "Risk Metrics" },
+    { "type": "paragraph", "text": "Custom per-table style — no alternating rows, tighter padding, centred body text." },
+
+    {
+      "type": "table",
+      "headers": ["Metric", "Portfolio", "Benchmark", "Status"],
+      "column_widths": ["35%", "20%", "20%", "25%"],
+      "column_align": ["left", "center", "center", "center"],
+      "style": {
+        "header_background": "#4a0072",
+        "header_color":      "#ffffff",
+        "alternate_rows":    false,
+        "cell_padding":      6,
+        "grid_color":        "#bbbbbb"
+      },
+      "rows": [
+        ["Value-at-Risk (99%, 1d)", "1.82%",  "—",     "✓ Within limit"],
+        ["Conditional VaR",        "2.41%",  "—",     "✓ Within limit"],
+        ["Max Drawdown (YTD)",     "−3.1%",  "−4.8%", "✓ Better"],
+        ["Tracking Error (ann.)",  "2.8%",   "—",     "✓ Within limit"],
+        ["Beta",                   "0.94",   "1.00",  "✓ As expected"],
+        ["Active Share",           "38.2%",  "—",     "✓ Acceptable"]
+      ]
+    },
+
+    { "type": "heading", "level": 1, "text": "Counterparty Exposure" },
+    { "type": "paragraph", "text": "No headers — table begins directly with data rows." },
+
+    {
+      "type": "table",
+      "column_widths": ["50%", "25%", "25%"],
+      "column_align": ["left", "right", "right"],
+      "style": {
+        "alternate_rows": true
+      },
+      "rows": [
+        ["Counterparty",          "Exposure (£m)", "% of AUM"],
+        ["Goldman Sachs",         "42.1",          "0.74%"],
+        ["JP Morgan",             "38.7",          "0.68%"],
+        ["Deutsche Bank",         "21.4",          "0.38%"],
+        ["Barclays",              "18.9",          "0.33%"],
+        ["UBS",                   "15.2",          "0.27%"]
+      ]
+    },
+
+    { "type": "page_break" },
+
+    { "type": "heading", "level": 1, "text": "Portfolio Holdings — Full Universe" },
+    { "type": "paragraph", "text": "Large table across two pages. The header row (<b>Security, ISIN, Asset Class, Region, Weight, YTD</b>) should repeat at the top of the second page automatically." },
+
+    {
+      "type": "table",
+      "headers": ["Security", "ISIN", "Asset Class", "Region", "Weight %", "YTD %"],
+      "column_widths": ["28%", "15%", "17%", "15%", "12%", "13%"],
+      "column_align": ["left", "left", "left", "left", "right", "right"],
+      "rows": [
+        ["Apple Inc",                     "US0378331005", "Equity",          "North America", "3.42", "+18.7"],
+        ["Microsoft Corporation",         "US5949181045", "Equity",          "North America", "3.18", "+22.1"],
+        ["NVIDIA Corporation",            "US67066G1040", "Equity",          "North America", "2.91", "+71.4"],
+        ["Alphabet Inc Class A",          "US02079K3059", "Equity",          "North America", "2.44", "+31.2"],
+        ["Amazon.com Inc",                "US0231351067", "Equity",          "North America", "2.31", "+26.8"],
+        ["JPMorgan Chase & Co",           "US46625H1005", "Equity",          "North America", "1.87", "+12.4"],
+        ["Nestlé SA",                     "CH0038863350", "Equity",          "Europe",        "1.74", "+4.1"],
+        ["ASML Holding NV",               "NL0010273215", "Equity",          "Europe",        "1.62", "+38.6"],
+        ["Samsung Electronics",           "KR7005930003", "Equity",          "Asia Pacific",  "1.44", "+8.3"],
+        ["Toyota Motor Corporation",      "JP3633400001", "Equity",          "Asia Pacific",  "1.31", "+14.9"],
+        ["US Treasury 4.25% 2028",        "US912810TM73", "Fixed Income",    "North America", "4.20", "+2.1"],
+        ["US Treasury 3.875% 2031",       "US912810TX26", "Fixed Income",    "North America", "3.80", "+3.4"],
+        ["UK Gilt 4.0% 2031",             "GB00BTHH2R79", "Fixed Income",    "Europe",        "2.60", "+1.8"],
+        ["German Bund 2.5% 2029",         "DE0001102473", "Fixed Income",    "Europe",        "2.40", "+2.7"],
+        ["iShares Core MSCI EM ETF",      "IE00BKM4GZ66", "Equity",          "Emerging",      "2.10", "+6.4"],
+        ["Vanguard FTSE Dev Europe ETF",  "IE00B945VV12", "Equity",          "Europe",        "1.95", "+9.8"],
+        ["Meta Platforms Inc",            "US30303M1027", "Equity",          "North America", "1.88", "+44.2"],
+        ["Novo Nordisk A/S",              "DK0060534915", "Equity",          "Europe",        "1.76", "+11.3"],
+        ["LVMH Moët Hennessy",            "FR0000121014", "Equity",          "Europe",        "1.65", "−5.2"],
+        ["Taiwan Semiconductor",          "TW0002330008", "Equity",          "Asia Pacific",  "1.58", "+29.7"],
+        ["Blackstone Real Estate",        "US09260D1072", "Alternatives",    "North America", "1.50", "+7.2"],
+        ["iShares Gold ETF",              "IE00B4ND3602", "Commodities",     "Global",        "1.40", "+12.8"],
+        ["Brookfield Infra Partners",     "CA11271J1075", "Infrastructure",  "Global",        "1.35", "+3.9"],
+        ["US Treasury 5.0% 2033",         "US912810UF20", "Fixed Income",    "North America", "1.30", "+4.2"],
+        ["AstraZeneca PLC",               "GB0009895292", "Equity",          "Europe",        "1.28", "+8.6"],
+        ["BHP Group Limited",             "AU000000BHP4", "Equity",          "Asia Pacific",  "1.22", "+1.4"],
+        ["Equinor ASA",                   "NO0010096985", "Equity",          "Europe",        "1.18", "−3.7"],
+        ["Prologis Inc REIT",             "US74340W1036", "Real Estate",     "North America", "1.12", "+5.1"],
+        ["Siemens AG",                    "DE0007236101", "Equity",          "Europe",        "1.08", "+16.3"],
+        ["Cash & Near-Cash Equivalents",  "—",            "Cash",            "Global",        "4.31", "+0.4"]
+      ]
+    },
+
+    { "type": "spacer", "height": 24 },
+    { "type": "rule" },
+    { "type": "paragraph", "text": "<i>All figures as at 30 June 2026. Past performance is not a reliable indicator of future results.</i>", "style": "caption" }
+  ]
+}

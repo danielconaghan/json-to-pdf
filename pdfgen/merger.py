@@ -1,10 +1,12 @@
 import copy
 import json
+from functools import lru_cache
 from pathlib import Path
 
 _DEFAULTS_PATH = Path(__file__).parent / "defaults.json"
 
 
+@lru_cache(maxsize=1)
 def load_defaults():
     return json.loads(_DEFAULTS_PATH.read_text())
 
