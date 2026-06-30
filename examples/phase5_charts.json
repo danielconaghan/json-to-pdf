@@ -1,0 +1,120 @@
+{
+  "document": {
+    "title": "Oxford Risk — Performance Analytics",
+    "author": "Oxford Risk",
+    "subject": "Phase 5 Chart Demonstration",
+    "keywords": ["charts", "performance", "analytics", "Oxford Risk"]
+  },
+  "styles": {
+    "h1": { "color": "#003366" },
+    "h2": { "color": "#005599" }
+  },
+  "cover": {
+    "title": "Performance Analytics",
+    "subtitle": "Visual Reporting — Phase 5 Charts",
+    "author": "Oxford Risk",
+    "date": "30 June 2026",
+    "logo": "../assets/DefaultLogo.png"
+  },
+  "header": {
+    "logo": "../assets/DefaultLogo.png",
+    "right": "Confidential"
+  },
+  "footer": {
+    "left": "© Oxford Risk 2026"
+  },
+
+  "content": [
+
+    { "type": "heading", "level": 1, "text": "Quarterly Returns" },
+    { "type": "paragraph", "text": "The following chart compares quarterly total returns for the <b>Growth</b> and <b>Balanced</b> mandates against their respective benchmarks. Both mandates outperformed across all four quarters of the period." },
+
+    {
+      "type": "chart",
+      "chart_type": "bar",
+      "title": "Quarterly Total Return (%)",
+      "width": "100%",
+      "caption": "Fig. 1 — Quarterly total returns, Growth vs Balanced, Q1–Q4 2026. Benchmark is composite blended index.",
+      "data": {
+        "labels": ["Q1 2026", "Q2 2026", "Q3 2026", "Q4 2026"],
+        "series": [
+          { "name": "Growth",           "values": [3.2,  4.8,  2.9,  5.1] },
+          { "name": "Growth Benchmark", "values": [2.1,  3.6,  2.4,  4.0] },
+          { "name": "Balanced",         "values": [2.0,  3.1,  1.8,  3.4] },
+          { "name": "Balanced Benchmark","values": [1.4,  2.5,  1.5,  2.8] }
+        ]
+      }
+    },
+
+    { "type": "spacer", "height": 16 },
+
+    { "type": "heading", "level": 1, "text": "Net Asset Value" },
+    { "type": "paragraph", "text": "Monthly NAV progression (rebased to 100 at 1 January 2026) illustrates the compound growth trajectory of each mandate. The Growth mandate reached <b>122.4</b> by year end, reflecting strong equity market conditions." },
+
+    {
+      "type": "chart",
+      "chart_type": "line",
+      "title": "NAV Progression — Rebased to 100 (Jan 2026)",
+      "width": "100%",
+      "caption": "Fig. 2 — Monthly NAV, rebased to 100 at 1 Jan 2026. Growth (navy), Balanced (blue), Income (amber).",
+      "data": {
+        "labels": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+        "series": [
+          { "name": "Growth",   "values": [100, 102.4, 105.1, 103.8, 107.2, 110.6, 113.1, 111.8, 115.4, 118.2, 120.1, 122.4] },
+          { "name": "Balanced", "values": [100, 101.4, 103.2, 102.3, 104.8, 107.1, 109.0, 108.2, 111.1, 113.4, 114.8, 116.6] },
+          { "name": "Income",   "values": [100, 100.8, 101.9, 101.2, 102.6, 104.0, 105.2, 104.8, 106.3, 107.5, 108.2, 109.4] }
+        ]
+      }
+    },
+
+    { "type": "page_break" },
+
+    { "type": "heading", "level": 1, "text": "Portfolio Composition" },
+    { "type": "paragraph", "text": "The strategic asset allocation reflects a balanced approach to long-term risk-adjusted return. Global equities represent the largest single allocation at <b>45%</b>, consistent with the mandate's growth orientation." },
+
+    {
+      "type": "chart",
+      "chart_type": "pie",
+      "title": "Strategic Asset Allocation",
+      "width": "70%",
+      "align": "center",
+      "caption": "Fig. 3 — Strategic asset allocation as at 30 June 2026.",
+      "style": {
+        "height_ratio": 0.9
+      },
+      "data": {
+        "labels": ["Global Equities", "Fixed Income", "Alternatives", "Real Assets", "Cash"],
+        "series": [
+          { "name": "Allocation", "values": [45, 30, 15, 5, 5] }
+        ]
+      }
+    },
+
+    { "type": "spacer", "height": 16 },
+
+    { "type": "heading", "level": 1, "text": "Risk Attribution" },
+    { "type": "paragraph", "text": "The bar chart below decomposes total portfolio risk (ex-ante annualised volatility) by asset class contribution. Fixed income and alternatives provide the strongest diversification benefit relative to their weight." },
+
+    {
+      "type": "chart",
+      "chart_type": "bar",
+      "title": "Risk Contribution by Asset Class (%)",
+      "width": "100%",
+      "caption": "Fig. 4 — Ex-ante annualised volatility contribution by asset class.",
+      "style": {
+        "bar_width": 0.5
+      },
+      "data": {
+        "labels": ["Global Equities", "Fixed Income", "Alternatives", "Real Assets", "Cash"],
+        "series": [
+          { "name": "Risk Contribution", "values": [6.2, 1.4, 1.8, 0.6, 0.1] }
+        ]
+      }
+    },
+
+    { "type": "spacer", "height": 24 },
+    { "type": "rule" },
+    { "type": "paragraph", "text": "<i>All figures as at 30 June 2026. Past performance is not a reliable indicator of future results. This document is for professional investors only.</i>", "style": "caption" }
+
+  ]
+}

@@ -269,10 +269,10 @@ All `table_style` keys (global default):
 - [x] Table of contents (auto-generated from headings)
 - [x] PDF metadata (title, author, subject, keywords)
 
-### Phase 5 — Charts
-- [ ] Bar chart
-- [ ] Line chart
-- [ ] Pie chart
+### Phase 5 — Charts ✓
+- [x] Bar chart
+- [x] Line chart
+- [x] Pie chart
 
 ---
 

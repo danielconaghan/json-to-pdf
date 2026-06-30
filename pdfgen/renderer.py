@@ -6,6 +6,7 @@ from reportlab.lib.pagesizes import A4, LETTER, landscape
 from reportlab.lib.styles import ParagraphStyle
 from reportlab.platypus import NextPageTemplate, PageBreak, Paragraph
 
+from .elements.chart import build_chart
 from .elements.image import build_image
 from .elements.list_element import build_list
 from .elements.primitives import build_page_break, build_rule, build_spacer
@@ -87,6 +88,7 @@ _BUILDERS = {
     "image":      lambda el, ctx: build_image(el, ctx.rl_styles, ctx.doc, ctx.base_path),
     "table":      lambda el, ctx: build_table(el, ctx),
     "toc":        lambda el, ctx: build_toc(el, ctx.rl_styles),
+    "chart":      lambda el, ctx: build_chart(el, ctx.rl_styles, ctx.doc, ctx.config),
 }
 
 

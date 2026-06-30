@@ -64,6 +64,19 @@
     "space_before":      12,
     "space_after":       12
   },
+  "chart_style": {
+    "colors":       ["#1a1a2e", "#2e6da4", "#c69b3a", "#4a8b6e", "#8b5a6e", "#4b8fcf"],
+    "background":   "#ffffff",
+    "grid":         true,
+    "grid_color":   "#eeeeee",
+    "legend":       true,
+    "bar_width":    0.7,
+    "line_width":   2.0,
+    "dpi":          150,
+    "height_ratio": 0.55,
+    "space_before": 12,
+    "space_after":  12
+  },
   "pagination": true,
   "content": []
 }
