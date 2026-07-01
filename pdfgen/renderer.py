@@ -8,6 +8,7 @@ from reportlab.platypus import NextPageTemplate, PageBreak, Paragraph
 
 from .accessibility import TaggedHeading, TaggedParagraph, build_struct_tree
 from .elements.chart import build_chart
+from .fonts import register_builtin_fonts
 from .elements.image import build_image
 from .elements.list_element import build_list
 from .elements.primitives import build_page_break, build_rule, build_spacer
@@ -100,6 +101,7 @@ def _render_element(element, ctx):
 
 
 def render(config, output_path, base_path=None):
+    register_builtin_fonts()
     config["_base_path"] = base_path  # propagated to template drawing functions
     page_cfg = config["document"]["page"]
     margins = page_cfg["margins"]
