@@ -1,5 +1,0 @@
-reportlab>=4.2
-click>=8.1
-jsonschema>=4.20
-matplotlib>=3.8
-Pillow>=10.0

@@ -1,7 +1,7 @@
 from reportlab.lib.utils import ImageReader
-from reportlab.platypus import Image as RLImage
-from reportlab.platypus import Paragraph, Spacer
+from reportlab.platypus import Spacer
 
+from ..accessibility import TaggedCaption, TaggedImage
 from ..utils import resolve_path
 
 
@@ -21,8 +21,9 @@ def build_image(element, rl_styles, doc, base_path=None):
     iw, ih = reader.getSize()
     height = width * ih / iw
 
-    img = RLImage(src, width=width, height=height)
+    img = TaggedImage(src, width=width, height=height)
     img.hAlign = element.get("align", "left").upper()
+    img._tag_alt = element.get("alt", "")
 
     flowables = [img]
 
@@ -30,6 +31,6 @@ def build_image(element, rl_styles, doc, base_path=None):
     if caption_text:
         caption_style = rl_styles.get("caption") or rl_styles.get("body")
         flowables.append(Spacer(1, 4))
-        flowables.append(Paragraph(caption_text, caption_style))
+        flowables.append(TaggedCaption(caption_text, caption_style))
 
     return flowables

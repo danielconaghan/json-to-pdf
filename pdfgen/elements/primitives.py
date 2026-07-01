@@ -1,5 +1,7 @@
 from reportlab.lib.colors import HexColor
-from reportlab.platypus import HRFlowable, PageBreak, Spacer
+from reportlab.platypus import PageBreak, Spacer
+
+from ..accessibility import ArtifactRule
 
 
 def build_spacer(element):
@@ -11,7 +13,7 @@ def build_page_break(element):
 
 
 def build_rule(element):
-    return [HRFlowable(
+    return [ArtifactRule(
         width="100%",
         thickness=element.get("thickness", 0.5),
         color=HexColor(element.get("color", "#cccccc")),

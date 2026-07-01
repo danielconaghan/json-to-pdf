@@ -1,5 +1,6 @@
-from reportlab.platypus import Paragraph
 from reportlab.platypus.tableofcontents import TableOfContents
+
+from ..accessibility import TaggedHeading
 
 
 def build_toc(element, rl_styles):
@@ -18,7 +19,9 @@ def build_toc(element, rl_styles):
     title = element.get("title", "")
     if title:
         style = rl_styles.get("h1") or rl_styles["body"]
-        flowables.append(Paragraph(title, style))
+        heading = TaggedHeading(title, style)
+        heading._tag_role = "H1"
+        flowables.append(heading)
 
     depth = min(element.get("depth", 2), 3)
     toc = TableOfContents()

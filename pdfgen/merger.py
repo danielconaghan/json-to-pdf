@@ -7,8 +7,12 @@ _DEFAULTS_PATH = Path(__file__).parent / "defaults.json"
 
 
 @lru_cache(maxsize=1)
-def load_defaults():
+def _load_defaults_cached():
     return json.loads(_DEFAULTS_PATH.read_text())
+
+
+def load_defaults():
+    return copy.deepcopy(_load_defaults_cached())
 
 
 def deep_merge(base, override):

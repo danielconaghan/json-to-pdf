@@ -5,7 +5,9 @@ from matplotlib.backends.backend_agg import FigureCanvasAgg
 from matplotlib.figure import Figure
 from matplotlib.patches import Circle
 from reportlab.lib.utils import ImageReader
-from reportlab.platypus import Image as RLImage, Paragraph, Spacer
+from reportlab.platypus import Spacer
+
+from ..accessibility import TaggedCaption, TaggedChart
 
 _DEFAULT_COLORS = [
     "#1a1a2e",  # deep navy
@@ -58,17 +60,18 @@ def build_chart(element, rl_styles, doc, config):
     buf.seek(0)
     height_pt = width_pt * ih / iw
 
-    img = RLImage(buf, width=width_pt, height=height_pt)
+    img = TaggedChart(buf, width=width_pt, height=height_pt)
     img.hAlign = element.get("align", "left").upper()
     img.spaceBefore = style.get("space_before", 12)
     img.spaceAfter = style.get("space_after", 12)
+    img._tag_alt = element.get("alt", "")
 
     flowables = [img]
     caption = element.get("caption")
     if caption:
         cap_style = rl_styles.get("caption") or rl_styles.get("body")
         flowables.append(Spacer(1, 4))
-        flowables.append(Paragraph(caption, cap_style))
+        flowables.append(TaggedCaption(caption, cap_style))
 
     return flowables
 

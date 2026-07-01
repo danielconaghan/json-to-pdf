@@ -24,7 +24,10 @@ def register_fonts(fonts_config, base_path=None):
             if base_path is not None:
                 path = str(Path(base_path) / path)
             registered_name = name if not suffix else f"{name}{suffix}"
-            pdfmetrics.registerFont(TTFont(registered_name, path))
+            try:
+                pdfmetrics.registerFont(TTFont(registered_name, path))
+            except Exception as e:
+                raise ValueError(f"Font '{name}' ({field}): cannot load '{path}'") from e
             variants[field] = registered_name
 
         pdfmetrics.registerFontFamily(

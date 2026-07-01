@@ -3,6 +3,7 @@ from reportlab.lib.utils import ImageReader
 from reportlab.pdfgen import canvas
 from reportlab.platypus import Frame, PageTemplate
 
+from ..accessibility import begin_artifact, end_artifact
 from ..utils import resolve_path
 
 _HEADER_FONT = "Helvetica"
@@ -21,11 +22,11 @@ _HEADER_LOGO_HEIGHT = 20    # logo height on content-page headers
 
 
 def _image_ratio(path):
-    """Return (width_px, height_px) for an image, or None on failure."""
+    """Return (width_px, height_px) for an image, or None if the file is unreadable."""
     try:
         r = ImageReader(path)
         return r.getSize()
-    except Exception:
+    except (OSError, IOError):
         return None
 
 
@@ -34,18 +35,31 @@ def _image_ratio(path):
 
 def make_numbered_canvas_class(config):
     """Return a Canvas subclass that stamps 'Page X of Y' on every content page."""
+    from ..accessibility import _StructTracker, setup_document
+
     pagination = config.get("pagination", True)
     margins = config["document"]["page"]["margins"]
+
+    # One tracker shared across all canvas instances; reset on each new canvas
+    # so only the final multiBuild pass contributes to the structure tree.
+    tracker = _StructTracker()
+    config["_struct_tracker"] = tracker
 
     class _NumberedCanvas(canvas.Canvas):
         def __init__(self, *args, **kwargs):
             super().__init__(*args, **kwargs)
             self._page_states = []
             self._page_meta = []
+            self._mcid_counter = 0
+            tracker.reset()
+            self._tracker = tracker
+            setup_document(self, config)
 
         def showPage(self):
             self._page_states.append(dict(self.__dict__))
             self._page_meta.append({"is_cover": getattr(self, "_is_cover", False)})
+            self._mcid_counter = 0
+            tracker.new_page()
             self._startPage()
 
         def save(self):
@@ -63,6 +77,7 @@ def make_numbered_canvas_class(config):
 
         def _stamp_page_number(self, num, total):
             page_w, _ = self._pagesize
+            begin_artifact(self, "Pagination")
             self.saveState()
             self.setFont(_HEADER_FONT, _HEADER_SIZE)
             self.setFillColor(HexColor(_HEADER_COLOR))
@@ -72,6 +87,7 @@ def make_numbered_canvas_class(config):
                 f"Page {num} of {total}",
             )
             self.restoreState()
+            end_artifact(self)
 
     return _NumberedCanvas
 
@@ -125,6 +141,7 @@ def _draw_header(canv, doc, config):
     y_text = page_h - doc.topMargin * 0.55
     y_sep = page_h - doc.topMargin + 4
 
+    begin_artifact(canv, "Pagination")
     canv.saveState()
 
     # Left position: logo takes priority over text when both are set
@@ -157,6 +174,7 @@ def _draw_header(canv, doc, config):
         canv.line(left, y_sep, right, y_sep)
 
     canv.restoreState()
+    end_artifact(canv)
 
 
 def _draw_footer(canv, doc, config):
@@ -168,6 +186,7 @@ def _draw_footer(canv, doc, config):
     y_text = doc.bottomMargin * 0.45
     y_sep = doc.bottomMargin - 4
 
+    begin_artifact(canv, "Pagination")
     canv.saveState()
     canv.setFont(_HEADER_FONT, _HEADER_SIZE)
     canv.setFillColor(HexColor(_HEADER_COLOR))
@@ -183,6 +202,7 @@ def _draw_footer(canv, doc, config):
         canv.line(left, y_sep, right, y_sep)
 
     canv.restoreState()
+    end_artifact(canv)
 
 
 def _draw_cover_background(canv, bg_image_path, page_w, page_h, bg):
@@ -219,6 +239,7 @@ def _draw_cover(canv, doc, config):
     logo_path = resolve_path(cover.get("logo"), base_path)
     bg_image_path = resolve_path(cover.get("background_image"), base_path)
 
+    begin_artifact(canv, "Layout")
     canv.saveState()
 
     if logo_path and _image_ratio(logo_path):
@@ -227,6 +248,7 @@ def _draw_cover(canv, doc, config):
         _draw_cover_full(canv, doc, cover, bg_image_path, page_w, page_h, left, right, bg)
 
     canv.restoreState()
+    end_artifact(canv)
 
 
 def _draw_cover_split(canv, doc, cover, logo_path, bg_image_path, page_w, page_h, left, right, bg):
@@ -271,14 +293,7 @@ def _draw_cover_split(canv, doc, cover, logo_path, bg_image_path, page_w, page_h
         canv.setFont("Helvetica", _COVER_SUBTITLE_SIZE)
         canv.drawString(left, title_y - _COVER_TITLE_SIZE - 10, subtitle)
 
-    # Author (left) and date (right) near the bottom of the dark body
-    meta_y = doc.bottomMargin + 20
-    canv.setFillColor(HexColor(cover.get("subtitle_color", "#cccccc")))
-    canv.setFont("Helvetica", _COVER_META_SIZE)
-    if cover.get("author"):
-        canv.drawString(left, meta_y, cover["author"])
-    if cover.get("date"):
-        canv.drawRightString(right, meta_y, cover["date"])
+    _draw_cover_meta(canv, cover, doc, left, right)
 
 
 def _draw_cover_full(canv, doc, cover, bg_image_path, page_w, page_h, left, right, bg):
@@ -297,9 +312,14 @@ def _draw_cover_full(canv, doc, cover, bg_image_path, page_w, page_h, left, righ
         canv.setFont("Helvetica", 18)
         canv.drawString(left, page_h * 0.42 - 44, subtitle)
 
+    _draw_cover_meta(canv, cover, doc, left, right)
+
+
+def _draw_cover_meta(canv, cover, doc, left, right):
+    """Draw author (left) and date (right) near the bottom of the cover."""
     meta_y = doc.bottomMargin + 20
     canv.setFillColor(HexColor(cover.get("subtitle_color", "#cccccc")))
-    canv.setFont("Helvetica", 11)
+    canv.setFont("Helvetica", _COVER_META_SIZE)
     if cover.get("author"):
         canv.drawString(left, meta_y, cover["author"])
     if cover.get("date"):

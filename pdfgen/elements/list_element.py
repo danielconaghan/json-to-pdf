@@ -1,4 +1,6 @@
-from reportlab.platypus import ListFlowable, ListItem, Paragraph
+from reportlab.platypus import ListItem, Paragraph
+
+from ..accessibility import TaggedListFlowable
 
 
 def build_list(element, rl_styles):
@@ -17,7 +19,7 @@ def build_list(element, rl_styles):
         for item in items
     ]
 
-    return [ListFlowable(
+    return [TaggedListFlowable(
         list_items,
         bulletType=bullet_type,
         leftIndent=18,

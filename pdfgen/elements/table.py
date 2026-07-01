@@ -10,7 +10,9 @@ here because the table style is a flat dict of scalars).
 from reportlab.lib.colors import HexColor, white
 from reportlab.lib.enums import TA_CENTER, TA_LEFT, TA_RIGHT
 from reportlab.lib.styles import ParagraphStyle
-from reportlab.platypus import Paragraph, Table, TableStyle
+from reportlab.platypus import Paragraph, TableStyle
+
+from ..accessibility import TaggedTable
 
 _ALIGN_RL = {"left": TA_LEFT, "center": TA_CENTER, "right": TA_RIGHT}
 _STYLE_CACHE: dict = {}
@@ -26,7 +28,7 @@ def build_table(element, ctx):
 
     num_cols = len(headers) if headers else (len(rows[0]) if rows else 0)
     if num_cols == 0:
-        return None
+        return []
 
     col_widths = _resolve_col_widths(
         element.get("column_widths"), num_cols, ctx.doc.width,
@@ -39,11 +41,12 @@ def build_table(element, ctx):
     header_ps, body_ps = _make_cell_styles(style)
     data = _build_data(headers, rows, header_ps, body_ps, col_aligns, style)
 
-    table = Table(
+    table = TaggedTable(
         data,
         colWidths=col_widths,
         repeatRows=1 if headers else 0,   # repeat header on new pages
     )
+    table._has_header = bool(headers)
     table.setStyle(_build_style(style, has_header=bool(headers), num_data_rows=len(rows)))
     table.hAlign = "LEFT"
     table.spaceBefore = style.get("space_before", 12)

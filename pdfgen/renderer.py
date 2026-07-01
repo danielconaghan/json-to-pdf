@@ -6,6 +6,7 @@ from reportlab.lib.pagesizes import A4, LETTER, landscape
 from reportlab.lib.styles import ParagraphStyle
 from reportlab.platypus import NextPageTemplate, PageBreak, Paragraph
 
+from .accessibility import TaggedHeading, TaggedParagraph, build_struct_tree
 from .elements.chart import build_chart
 from .elements.image import build_image
 from .elements.list_element import build_list
@@ -67,14 +68,15 @@ def _build_rl_styles(resolved_styles):
 
 def _build_paragraph(element, ctx):
     style = ctx.rl_styles.get(element.get("style", "body")) or ctx.rl_styles.get("body")
-    return [Paragraph(element["text"], style)]
+    return [TaggedParagraph(element["text"], style)]
 
 
 def _build_heading(element, ctx):
     level = element.get("level", 1)
     style = ctx.rl_styles.get(f"h{level}") or ctx.rl_styles.get("h1")
-    p = Paragraph(element["text"], style)
-    p._toc_entry = (level - 1, element["text"])  # 0-indexed level for TableOfContents
+    p = TaggedHeading(element["text"], style)
+    p._tag_role = f"H{level}"
+    p._toc_entry = (level - 1, element["text"])
     return [p]
 
 
@@ -143,3 +145,5 @@ def render(config, output_path, base_path=None):
         doc.multiBuild(story, canvasmaker=NumberedCanvas)
     else:
         doc.build(story, canvasmaker=NumberedCanvas)
+
+    build_struct_tree(config["_struct_tracker"], output_path)
