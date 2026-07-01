@@ -19,6 +19,16 @@ Every pdfgen document is a single JSON object. The top-level keys control the do
 
 Every key is optional. A document with only `"content"` is valid — everything else falls back to the built-in defaults.
 
+Your JSON is **deep-merged** on top of those defaults. The merge rules are:
+
+| JSON type | Behaviour |
+|---|---|
+| Object `{}` | Merged key-by-key — only the keys you specify override; the rest are inherited |
+| Array `[]` | Your array replaces the default entirely |
+| String / number / boolean | Your value replaces the default |
+
+The one exception is `"content"`: it is always replaced (there are no sensible default content elements).
+
 ---
 
 ## `document`
@@ -111,7 +121,9 @@ Once registered, the family name (`"Calibri"`) can be used anywhere a `"font"` p
 
 Only `"name"` and `"regular"` are required. Missing variants fall back to `"regular"`.
 
-Available built-in fonts (no registration required): `Helvetica`, `Helvetica-Bold`, `Helvetica-Oblique`, `Helvetica-BoldOblique`, `Times-Roman`, `Times-Bold`, `Courier`, `Courier-Bold`.
+The built-in default font is **Vera** (Bitstream Vera Sans), which is embedded automatically and satisfies PDF/UA font-embedding requirements. You do not need to register it — it is always available.
+
+The 14 standard PDF fonts (`Helvetica`, `Times-Roman`, `Courier`, etc.) are also available by name but are **not embedded** in the output file. Using them will fail PDF/UA validation. Prefer custom TTF fonts or the built-in Vera family for accessible documents.
 
 ---
 

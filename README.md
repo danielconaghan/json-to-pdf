@@ -1,30 +1,18 @@
 # pdfgen
 
-A command-line tool that renders professional PDFs from a JSON configuration file.
-
-**The idea:** give it a JSON document, get back a polished PDF. Every layout decision has a sensible default — you only specify what you want to change.
+Render professional PDFs from a JSON file.
 
 ```bash
 pdfgen report.json output.pdf
 ```
 
----
-
-## Why pdfgen?
-
-| Approach | Problem |
-|---|---|
-| HTML-to-PDF | Unpredictable pagination, font inconsistency, browser quirks |
-| Low-level PDF libraries | Write every rectangle and string coordinate by hand |
-| **pdfgen** | Describe content and intent; the renderer handles layout |
-
-pdfgen sits in the middle: a clean JSON contract that separates *what you want* from *how it is drawn*. Variable substitution, data fetching, and templating all happen **upstream** — pdfgen receives fully resolved JSON and produces a pixel-perfect PDF.
+No layout code. No coordinate arithmetic. Describe what you want — pdfgen handles the rest.
 
 ---
 
 ## Installation
 
-Requires Python 3.11+ and a virtual environment (system Python is protected on macOS 14+).
+Requires Python 3.11+.
 
 ```bash
 python3 -m venv .venv
@@ -32,88 +20,97 @@ source .venv/bin/activate
 pip install -e .
 ```
 
-After installation, `pdfgen` is available as a shell command inside the venv.
-
 ---
 
 ## Quickstart
 
-The smallest valid document:
-
 ```json
 {
-  "document": { "title": "My First Report" },
+  "document": { "title": "My Report" },
+  "cover": {
+    "title":    "My Report",
+    "subtitle": "Q2 2026",
+    "author":   "Oxford Risk",
+    "date":     "1 July 2026"
+  },
   "content": [
-    { "type": "heading", "level": 1, "text": "Hello World" },
-    { "type": "paragraph", "text": "This is a paragraph." }
+    { "type": "heading",   "level": 1, "text": "Executive Summary" },
+    { "type": "paragraph", "text": "Performance exceeded benchmarks by 2.4%." },
+    {
+      "type": "table",
+      "headers": ["Fund", "Return YTD", "Sharpe"],
+      "rows": [
+        ["Oxford Risk Growth",   "+8.4%", "1.42"],
+        ["Oxford Risk Balanced", "+5.2%", "1.18"]
+      ]
+    }
   ]
 }
 ```
 
 ```bash
-pdfgen minimal.json output.pdf
+pdfgen report.json output.pdf
 ```
 
-This produces an A4 PDF with automatic page numbers, default Oxford Risk typography, and no other configuration required. Every detail — margins, fonts, colours, header, footer — is inherited from the built-in defaults.
+This produces a cover page, a headed table, and automatic "Page X of Y" numbering — with no further configuration.
 
 ---
 
-## The defaults + override model
+## What you get by default
 
-pdfgen ships with a complete `defaults.json` that defines every configurable property. Your JSON is **deep-merged** on top of it — you only need to include the keys you want to change.
+- Cover page with logo, title, subtitle, author, and date
+- Page headers and footers with separator lines
+- Automatic page numbers (cover excluded)
+- Headings at three levels
+- Tables with alternating rows and header repeat on page breaks
+- Bar, line, pie, and donut charts
+- Bullet and numbered lists
+- Table of contents (accurate page numbers, multi-pass build)
+- PDF bookmarks and document metadata
+- PDF/UA-1 accessibility — passes veraPDF validation out of the box
+
+Everything has a sensible default. Your JSON only needs to include the things you want to change.
+
+---
+
+## Customising
+
+Override any default by including the key in your JSON. Everything else is inherited.
 
 ```json
 {
-  "document": { "title": "Q2 Report" },
   "styles": {
-    "h1": { "color": "#003366" }
+    "h1": { "color": "#003366", "size": 22 }
+  },
+  "header": {
+    "logo":  "assets/logo.png",
+    "right": "Confidential"
+  },
+  "footer": {
+    "left": "© Oxford Risk 2026"
   }
 }
 ```
 
-This changes the h1 colour to Oxford Navy and leaves every other property — font, size, spacing, margins — exactly as defined in the defaults.
+To use your own fonts, register them as TTF files:
 
-**Merge rules:**
-
-| JSON type | Behaviour |
-|---|---|
-| Object (`{}`) | Deep merged — only specified keys override |
-| Array (`[]`) | User array replaces entirely |
-| String / number / boolean | User value replaces |
-
----
-
-## Features
-
-- **Paragraphs and headings** — levels 1–3, full inline HTML markup (`<b>`, `<i>`, `<u>`)
-- **Lists** — bullet and numbered
-- **Images** — JPEG, PNG; percentage or point width; optional caption
-- **Tables** — full-width by default; column widths, per-column alignment, alternating rows, header repeat on page break
-- **Charts** — bar (grouped multi-series), line (with area fill), pie
-- **Table of contents** — auto-generated from headings, accurate page numbers, configurable depth
-- **Cover page** — full-page design; logo, title, subtitle, author, date
-- **Headers and footers** — logo, text zones, separator line
-- **Automatic page numbers** — "Page X of Y", always accurate, cover excluded
-- **PDF metadata** — title, author, subject, keywords written to document properties
-- **Custom fonts** — register any TTF family with bold/italic variants; built-in Vera fallback ensures PDF/UA compliance even without custom fonts
-- **Style inheritance** — define a base style once, extend it everywhere
-- **PDF/UA-1 accessibility** — structure tree, tagged content, Artifact marking, XMP conformance declaration; validated against ISO 14289-1 via veraPDF
-
----
-
-## Documentation
-
-| Page | Contents |
-|---|---|
-| [Document Structure](docs/01-document-structure.md) | JSON envelope, page size, margins, metadata |
-| [Styles & Typography](docs/02-styles-and-typography.md) | Built-in styles, overriding, extends chains, inline markup, custom fonts |
-| [Content Types](docs/03-content-types.md) | All element types with full examples |
-| [Tables](docs/04-tables.md) | Column widths, alignment, styling, large tables |
-| [Charts](docs/05-charts.md) | Bar, line, pie; data format, multi-series, style overrides |
-| [Cover, Headers & Footers](docs/06-cover-headers-footers.md) | Cover page design, header/footer zones, page numbering |
-| [Defaults Reference](docs/07-defaults-reference.md) | Complete annotated defaults.json |
-| [Limitations](docs/08-limitations.md) | Known constraints and workarounds |
-| [Accessibility — PDF/UA-1](docs/09-accessibility-pdf-ua.md) | Compliance details, font requirements, `check_ua.py`, veraPDF via Docker |
+```json
+{
+  "fonts": [
+    {
+      "name":       "BrandSans",
+      "regular":    "fonts/BrandSans-Regular.ttf",
+      "bold":       "fonts/BrandSans-Bold.ttf",
+      "italic":     "fonts/BrandSans-Italic.ttf",
+      "bold_italic":"fonts/BrandSans-BoldItalic.ttf"
+    }
+  ],
+  "styles": {
+    "body": { "font": "BrandSans" },
+    "h1":   { "font": "BrandSans-Bold" }
+  }
+}
+```
 
 ---
 
@@ -128,25 +125,16 @@ This changes the h1 colour to Oxford Navy and leaves every other property — fo
 
 ---
 
-## Project structure
+## Documentation
 
-```
-pdfgen/
-  cli.py               Entry point — parses args, orchestrates merge/render
-  merger.py            Deep merge engine
-  styles.py            Style extends-chain resolver
-  fonts.py             TTF font registration
-  renderer.py          Main render function; element dispatch table
-  utils.py             Shared path resolution helper
-  defaults.json        Built-in defaults (the "hidden complex document")
-  elements/
-    chart.py           Bar / line / pie chart builder
-    image.py           Image flowable builder
-    list_element.py    Bullet and numbered list builder
-    primitives.py      Spacer, rule, page break
-    table.py           Table builder with full styling
-    toc.py             Table of contents builder
-  templates/
-    doc.py             PDFDocTemplate subclass (TOC notification support)
-    page.py            Page templates, NumberedCanvas, header/footer drawing
-```
+| Page | Contents |
+|---|---|
+| [Document Structure](docs/01-document-structure.md) | JSON envelope, page size, margins, metadata, merge rules |
+| [Styles & Typography](docs/02-styles-and-typography.md) | Built-in styles, overriding, custom fonts, inline markup |
+| [Content Types](docs/03-content-types.md) | All element types with full examples |
+| [Tables](docs/04-tables.md) | Column widths, alignment, styling, large tables |
+| [Charts](docs/05-charts.md) | Bar, line, pie; data format, multi-series, style overrides |
+| [Cover, Headers & Footers](docs/06-cover-headers-footers.md) | Cover page design, header/footer zones, page numbering |
+| [Defaults Reference](docs/07-defaults-reference.md) | Complete annotated defaults.json |
+| [Limitations](docs/08-limitations.md) | Known constraints and workarounds |
+| [Accessibility — PDF/UA-1](docs/09-accessibility-pdf-ua.md) | Compliance details, font requirements, testing with veraPDF |

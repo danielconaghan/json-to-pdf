@@ -10,11 +10,11 @@ These styles exist in `defaults.json` and are always available.
 
 | Name | Used by | Default appearance |
 |---|---|---|
-| `body` | `paragraph` elements (default) | Helvetica 11pt, #333333, 16pt leading |
-| `h1` | `heading level: 1` | Helvetica-Bold 24pt, #1a1a2e, 28pt leading |
-| `h2` | `heading level: 2` | Helvetica-Bold 18pt, #1a1a2e (extends h1) |
-| `h3` | `heading level: 3` | Helvetica-Bold 14pt, #1a1a2e (extends h1) |
-| `caption` | `paragraph style: "caption"`, image captions | Helvetica 9pt, #888888 (extends body) |
+| `body` | `paragraph` elements (default) | Vera 11pt, #333333, 16pt leading |
+| `h1` | `heading level: 1` | Vera-Bold 24pt, #1a1a2e, 28pt leading |
+| `h2` | `heading level: 2` | Vera-Bold 18pt, #1a1a2e (extends h1) |
+| `h3` | `heading level: 3` | Vera-Bold 14pt, #1a1a2e (extends h1) |
+| `caption` | `paragraph style: "caption"`, image captions | Vera 9pt, #888888 (extends body) |
 | `toc_h1` | TOC entries at level 1 | body, bold |
 | `toc_h2` | TOC entries at level 2 | body, 16pt left indent |
 | `toc_h3` | TOC entries at level 3 | body, 10pt, 32pt left indent |
@@ -41,7 +41,7 @@ This changes h1 to Oxford Navy and adjusts body to 10pt — font, spacing, and e
 
 | Property | Type | Description |
 |---|---|---|
-| `font` | string | Font name. Built-ins: `Helvetica`, `Helvetica-Bold`, `Times-Roman`, `Courier`. Custom TTFs must be registered in `fonts`. |
+| `font` | string | Font name. The built-in default is `Vera` (embedded, PDF/UA-safe). Standard PDF fonts (`Helvetica`, `Times-Roman`, etc.) are available but not embedded. Custom TTFs must be registered in `fonts`. |
 | `size` | number | Font size in points. |
 | `leading` | number | Line height in points. Rule of thumb: `size × 1.4` for body, `size × 1.15` for headings. |
 | `color` | hex string | Text colour as `"#rrggbb"`. |
