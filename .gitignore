@@ -15,3 +15,10 @@ coverage.xml
 dist/
 build/
 .venv/
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.backup
+*.tfvars
+!*.tfvars.example

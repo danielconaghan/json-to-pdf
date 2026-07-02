@@ -82,8 +82,10 @@ The Lambda execution role needs `s3:PutObject` and `s3:GetObject` on the output 
 ## Container image
 
 ```bash
-docker build -t pdfgen-api .
+make build    # docker build --platform linux/arm64 -t pdfgen-api .
 ```
+
+The platform pin matters: the image architecture must match the Lambda's `architectures` setting (`arm64` by default in `infra/`), or invocations fail with `Runtime.InvalidEntrypoint`.
 
 The image is based on `public.ecr.aws/lambda/python:3.12` and:
 
@@ -93,6 +95,12 @@ The image is based on `public.ecr.aws/lambda/python:3.12` and:
 - uses `api.handler.lambda_handler` as the entry point.
 
 Updating a bundled brand asset means rebuilding and redeploying the image — that is deliberate: assets version with the code.
+
+---
+
+## Deployment
+
+The full stack — ECR repository, Lambda, HTTP API Gateway (`POST /render`, IAM-authenticated), and the output bucket with its lifecycle rule — is defined in [`infra/`](../infra/README.md). Day-to-day deploys are `make deploy` from the repo root; the infra README covers the one-time bootstrap (remote state, first image push) and how to call the IAM-authenticated endpoint.
 
 ---
 

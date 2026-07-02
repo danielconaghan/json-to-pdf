@@ -129,9 +129,11 @@ The repo includes a service layer for deploying pdfgen as an HTTP API on AWS Lam
 
 - `api/` — the Lambda handler: POST a document config JSON, receive a presigned S3 URL for the rendered PDF
 - `Dockerfile` — a Lambda container image bundling the library, brand assets, and handler
+- `infra/` — Terraform for the full stack: ECR, Lambda, HTTP API Gateway, output bucket ([deploy guide](infra/README.md))
 
 ```bash
-docker build -t pdfgen-api .
+make build            # container image
+make deploy           # push to ECR + terraform apply
 ```
 
 Per-document images travel inline as base64 data URIs; brand assets (fonts, logos) are bundled in the image. See [HTTP API — AWS Lambda](docs/10-lambda-api.md) for the request/response contract, configuration, and local testing.
