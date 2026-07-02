@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate abstract_cover.png — Oxford blue bloom for cover backgrounds.
+"""Generate abstract_cover.png — Deep blue bloom for cover backgrounds.
 
 Run from any directory:
     python assets/generate_abstract.py
@@ -39,7 +39,7 @@ for r, c, alpha in [
                          alpha=alpha, zorder=1))
 
 # ── Petal layers — (n, rot_offset°, reach, ell_w, ell_h, colors, alpha) ──────
-# Oxford blue palette: deep navy → royal blue → bright cerulean → pale sky + gold
+# Deep blue palette: deep navy → royal blue → bright cerulean → pale sky + gold
 layers = [
     # outermost — deep navy, visible against the dark bg
     ( 6,  0.0, 0.90, 0.52, 1.00, ["#002c6e", "#003a8a"], 0.55),

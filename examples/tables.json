@@ -1,13 +1,13 @@
 {
   "document": {
-    "title": "Oxford Risk — Tables Showcase",
-    "author": "Oxford Risk",
+    "title": "Acme — Tables Showcase",
+    "author": "Acme",
     "subject": "Phase 3 Table Demonstration"
   },
   "cover": {
     "title": "Tables Showcase",
     "subtitle": "Phase 3 — Tabular Data",
-    "author": "Oxford Risk",
+    "author": "Acme",
     "date": "30 June 2026",
     "logo": "../assets/DefaultLogo.png"
   },
@@ -16,7 +16,7 @@
     "right": "Confidential"
   },
   "footer": {
-    "left": "© Oxford Risk 2026"
+    "left": "© Acme 2026"
   },
 
   "content": [
@@ -30,12 +30,12 @@
       "column_widths": ["28%", "12%", "12%", "12%", "12%", "12%"],
       "column_align": ["left", "right", "right", "right", "right", "right"],
       "rows": [
-        ["Oxford Risk Growth",    "1,240", "+8.4%",  "+14.2%", "9.1%",  "1.42"],
-        ["Oxford Risk Balanced",  "  980", "+5.2%",  "+9.8%",  "6.3%",  "1.18"],
-        ["Oxford Risk Income",    "  760", "+3.1%",  "+6.4%",  "4.2%",  "0.97"],
-        ["Oxford Risk Conservative", "540","−0.3%",  "+3.1%",  "2.8%",  "0.64"],
-        ["Oxford Risk Global",   "2,100", "+11.7%", "+19.3%", "12.4%", "1.61"],
-        ["Oxford Risk EM",       "  320", "+6.8%",  "+12.1%",  "14.7%","0.82"]
+        ["Acme Growth",    "1,240", "+8.4%",  "+14.2%", "9.1%",  "1.42"],
+        ["Acme Balanced",  "  980", "+5.2%",  "+9.8%",  "6.3%",  "1.18"],
+        ["Acme Income",    "  760", "+3.1%",  "+6.4%",  "4.2%",  "0.97"],
+        ["Acme Conservative", "540","−0.3%",  "+3.1%",  "2.8%",  "0.64"],
+        ["Acme Global",   "2,100", "+11.7%", "+19.3%", "12.4%", "1.61"],
+        ["Acme EM",       "  320", "+6.8%",  "+12.1%",  "14.7%","0.82"]
       ]
     },
 

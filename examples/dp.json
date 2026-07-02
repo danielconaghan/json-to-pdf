@@ -1,14 +1,14 @@
 {
   "document": {
-    "title": "Client Profile Report — Daniel Conaghan",
-    "author": "Alex Chase, Oxford Risk",
+    "title": "Client Profile Report — Acme",
+    "author": "Alex Chase, Acme",
     "subject": "Investment Risk Profile and Sustainability Preferences",
-    "keywords": ["risk profile", "Oxford Risk", "sustainability", "ESG", "Daniel Conaghan"]
+    "keywords": ["risk profile", "Acme", "sustainability", "ESG", "Acme"]
   },
 
   "cover": {
     "title": "Client Profile Report",
-    "subtitle": "Daniel Conaghan",
+    "subtitle": "Acme",
     "author": "Prepared by: Alex Chase",
     "date": "15 Nov 2021",
     "background_image": "../assets/abstract_cover.jpg",
@@ -17,12 +17,12 @@
   },
 
   "header": {
-    "left": "Daniel Conaghan — 15 Sep 2021",
+    "left": "Acme — 15 Sep 2021",
     "separator": true
   },
 
   "footer": {
-    "left": "Oxford Risk",
+    "left": "Acme",
     "center": "Client Profile Report",
     "separator": false
   },
@@ -194,7 +194,7 @@
     { "type": "paragraph", "text": "For example, investments such as cash deposits and bonds issued by the UK Government (known as gilts) are considered low risk. Property, corporate bonds issued by UK companies as well as other types of global bonds issued by overseas governments and companies are considered medium risk. In the case of global bonds, generally those which pay a higher income are riskier than those which pay a lower income level. Shares in companies in the UK and other developed markets are considered high risk, while shares from companies in emerging markets are considered very high risk. You can reduce the overall risk in a portfolio by using 'diversification' — in other words, spreading your money across different investments. By doing this, you can match your overall portfolio to the level of risk that is right for you." },
     { "type": "paragraph", "text": "It's important that your investment portfolio matches your willingness and ability to take investment risk. A 'high medium' risk profile shows that your willingness and ability to accept investment risk is slightly above average. A portfolio that matches this risk profile is likely to experience some significant rises and falls in value. So while there is good potential for returns from your investment to match or go above the rate of inflation (in other words, the rate at which the prices of goods and services rise), you also need to accept that your investment is likely to fall in value from time to time, particularly in the short term." },
     { "type": "paragraph", "text": "A portfolio for this risk profile is most likely to contain mainly medium- and high-risk investments, including Sterling corporate bonds and global bonds including higher income types as well as Property and shares. The shares are expected to be held mainly in the UK and other developed markets, but there is also likely to be some in higher-risk emerging markets. As a result, you should always check that you are comfortable with what's included." },
-    { "type": "paragraph", "text": "Oxford Risk risk profile descriptions have been approved by the Plain English Campaign.", "style": "caption" },
+    { "type": "paragraph", "text": "Acme risk profile descriptions have been approved by the Plain English Campaign.", "style": "caption" },
     { "type": "heading", "level": 3, "text": "Discussion notes" },
     { "type": "paragraph", "text": "<b>After a discussion around your short term and long term goals, we agreed that the level of risk you are currently taking was acceptable.</b>", "style": "discussion" },
     { "type": "heading", "level": 3, "text": "How your risk-profiled portfolio might perform" },
@@ -241,8 +241,8 @@
         ]
       }
     },
-    { "type": "paragraph", "text": "When we recommend an investment to you it may either be a solution that bears one of the Oxford Risk badges, marked with your risk profile number, selected to match your personal needs and preferences; or a portfolio of individual funds, based on the benchmark asset allocation shown above, adjusted using my expertise to take into account our understanding of current market conditions and your personal needs and preferences." },
-    { "type": "paragraph", "text": "[Oxford Risk fund badges — not yet supported: requires an inline image element type]", "style": "note" },
+    { "type": "paragraph", "text": "When we recommend an investment to you it may either be a solution that bears one of the Acme badges, marked with your risk profile number, selected to match your personal needs and preferences; or a portfolio of individual funds, based on the benchmark asset allocation shown above, adjusted using my expertise to take into account our understanding of current market conditions and your personal needs and preferences." },
+    { "type": "paragraph", "text": "[Acme fund badges — not yet supported: requires an inline image element type]", "style": "note" },
     { "type": "paragraph", "text": "This benchmark asset allocation is designed to provide the potential for higher returns than cash deposits. It is also highly diversified to protect against falls in any individual area of the investment market. The level of income generated by this portfolio may fall and rise. The portfolio includes some overseas investments, which may see additional fluctuations in value because of changes in currency exchange rates." },
     { "type": "paragraph", "text": "It is assumed that this asset allocation will be constructed using pooled investment funds. Although the capital value of investment funds may fluctuate, and you are not guaranteed to receive back the original amount invested, the risk of loss is much less than for an investment made directly in the stock market — for example into individual company shares." },
     { "type": "paragraph", "text": "Using the suggested benchmark allocation, you could expect the below outcomes, though it is important to note that these are not guaranteed, and the figures could be higher or lower." },
@@ -256,13 +256,13 @@
       },
       "headers": ["Metric", "Value"],
       "rows": [
-        ["<b>Expected return</b>\nThe average return (net of inflation) you could expect by taking this risk based on a projection of the Oxford Risk index for this risk profile. Note that this measure takes into account the small possibility of a very high return. This means that the rate is larger than the 'plan for this' outcome in the projection.", "3.49%"],
+        ["<b>Expected return</b>\nThe average return (net of inflation) you could expect by taking this risk based on a projection of the Acme index for this risk profile. Note that this measure takes into account the small possibility of a very high return. This means that the rate is larger than the 'plan for this' outcome in the projection.", "3.49%"],
         ["<b>Value at risk</b>\nThere can be big one year falls in value. We expect that 95% of the time this investment would fall by no more than -19.26% over one year.", "-19.26%"],
         ["<b>Expected volatility</b>\nEach day the returns will be different, positive or negative, we expect these to vary by 11.71% from the average return (aka Standard Deviation).", "11.71%"]
       ]
     },
     { "type": "heading", "level": 2, "text": "Past performance of your benchmark asset allocation" },
-    { "type": "paragraph", "text": "This chart shows the aggregated past performance of the Oxford Risk benchmark asset allocation over the past year. Remember that past performance is not a guarantee for future performance and the actual performance of your own portfolio will depend upon how your selected investments perform, their tax treatment and any charges incurred." },
+    { "type": "paragraph", "text": "This chart shows the aggregated past performance of the Acme benchmark asset allocation over the past year. Remember that past performance is not a guarantee for future performance and the actual performance of your own portfolio will depend upon how your selected investments perform, their tax treatment and any charges incurred." },
     {
       "type": "chart",
       "chart_type": "line",
@@ -277,7 +277,7 @@
       "data": {
         "labels": ["Sep 20", "Oct 20", "Nov 20", "Dec 20", "Jan 21", "Feb 21", "Mar 21", "Apr 21", "May 21", "Jun 21", "Jul 21", "Aug 21", "Sep 21"],
         "series": [
-          { "name": "Oxford Risk 6", "values": [-2.1, -3.8, 3.2, 5.5, 4.8, 5.2, 7.1, 9.4, 9.8, 11.2, 10.4, 13.8, 14.6] }
+          { "name": "Acme 6", "values": [-2.1, -3.8, 3.2, 5.5, 4.8, 5.2, 7.1, 9.4, 9.8, 11.2, 10.4, 13.8, 14.6] }
         ]
       }
     },
@@ -299,7 +299,7 @@
       ]
     },
     { "type": "heading", "level": 2, "text": "Past performance" },
-    { "type": "paragraph", "text": "This chart shows the aggregated past performance of the Oxford Risk benchmark asset allocation over the past year. Remember that past performance is not a guarantee for future performance and the actual performance of your own portfolio will depend upon how your selected investments perform, their tax treatment and any charges incurred." },
+    { "type": "paragraph", "text": "This chart shows the aggregated past performance of the Acme benchmark asset allocation over the past year. Remember that past performance is not a guarantee for future performance and the actual performance of your own portfolio will depend upon how your selected investments perform, their tax treatment and any charges incurred." },
     {
       "type": "chart",
       "chart_type": "line",
@@ -314,9 +314,9 @@
       "data": {
         "labels": ["Sep 20", "Oct 20", "Nov 20", "Dec 20", "Jan 21", "Feb 21", "Mar 21", "Apr 21", "May 21", "Jun 21", "Jul 21", "Aug 21", "Sep 21"],
         "series": [
-          { "name": "Oxford Risk 6", "values": [-2.1, -3.8, 3.2, 5.5, 4.8, 5.2, 7.1, 9.4, 9.8, 11.2, 10.4, 13.8, 14.6] },
-          { "name": "Oxford Risk 5", "values": [-1.8, -2.9, 2.5, 4.2, 3.9, 4.4, 5.8, 7.6, 8.1,  9.4,  9.0, 11.5, 12.1] },
-          { "name": "Oxford Risk 7", "values": [-2.6, -4.8, 4.1, 6.9, 5.8, 6.3, 8.7, 11.4, 11.9, 13.3, 12.1, 16.2, 17.4] }
+          { "name": "Acme 6", "values": [-2.1, -3.8, 3.2, 5.5, 4.8, 5.2, 7.1, 9.4, 9.8, 11.2, 10.4, 13.8, 14.6] },
+          { "name": "Acme 5", "values": [-1.8, -2.9, 2.5, 4.2, 3.9, 4.4, 5.8, 7.6, 8.1,  9.4,  9.0, 11.5, 12.1] },
+          { "name": "Acme 7", "values": [-2.6, -4.8, 4.1, 6.9, 5.8, 6.3, 8.7, 11.4, 11.9, 13.3, 12.1, 16.2, 17.4] }
         ]
       }
     },
@@ -374,7 +374,7 @@
       "headers": ["Client signature", "Adviser signature"],
       "rows": [
         ["", ""],
-        ["Daniel Conaghan", "Alex Chase"],
+        ["Acme", "Alex Chase"],
         ["", ""],
         ["Date", "Date"]
       ]
@@ -387,7 +387,7 @@
       "column_widths": ["20%", "80%"],
       "style": { "alternate_rows": false, "grid_color": "#ffffff" },
       "rows": [
-        ["<b>Email:</b>", "alexchase@oxfordrisk.com"]
+        ["<b>Email:</b>", "alexchase@acme.example"]
       ]
     }
 

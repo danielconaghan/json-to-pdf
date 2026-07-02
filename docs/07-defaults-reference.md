@@ -177,7 +177,7 @@ This is the complete `defaults.json` with every key annotated. Your document is 
   "chart_style": {
     "colors": [
       "#1a1a2e",  // deep navy (series 1)
-      "#2e6da4",  // oxford blue (series 2)
+      "#2e6da4",  // steel blue (series 2)
       "#c69b3a",  // amber (series 3)
       "#4a8b6e",  // sage green (series 4)
       "#8b5a6e",  // mauve (series 5)
@@ -186,11 +186,24 @@ This is the complete `defaults.json` with every key annotated. Your document is 
     "background":   "#ffffff",  // Chart and axes background
     "grid":         true,       // Horizontal grid lines (bar and line only)
     "grid_color":   "#eeeeee",
+    "grid_style":   "solid",    // solid | dashed | dotted | dashdot
+    "axis_color":   "#cccccc",  // Bottom/left axis line colour
+    "tick_size":    9,          // Tick label font size (legend matches)
+    "tick_color":   "#555555",  // Tick label colour
+    "title_size":   11,         // Chart title font size
+    "title_color":  "#222222",  // Chart title colour
     "legend":       true,       // Show legend when series have names
+    "legend_position": "best",  // best | top | bottom | right
     "bar_width":    0.7,        // 0–1; total group width as fraction of slot
     "line_width":   2.0,        // Points
     "show_points":  false,      // Show circle markers at each data point (line only)
     "show_area":    false,      // Fill area below each line with a tint (line only)
+    "area_alpha":   0.07,       // Opacity of the area fill (0–1)
+    "marker_size":  4,          // Marker size when show_points is on
+    "show_values":  false,      // Print each bar's value above it (bar only)
+    "value_format": "{:g}",     // Format string for show_values, e.g. "{:.1f}%"
+    "y_prefix":     "",         // Text before y-axis tick labels, e.g. "£"
+    "y_suffix":     "",         // Text after y-axis tick labels, e.g. "%"
     "dpi":          150,        // Render resolution
     "height_ratio": 0.55,       // Chart height = width × height_ratio
     "donut_ratio":  0.5,        // Inner hole radius as fraction of outer (donut only)

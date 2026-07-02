@@ -84,7 +84,7 @@ Produces: valid paginated A4 PDF, default typography, automatic page numbers.
 {
   "document": {
     "title": "Q2 Report",
-    "author": "Oxford Risk",
+    "author": "Acme",
     "subject": "Quarterly Performance",
     "keywords": ["risk", "performance"],
     "page": {
@@ -493,12 +493,12 @@ pdfgen/
 │   │                       # all draw helpers (_draw_cover_split, _draw_header, etc.)
 │   └── defaults.json       # Full default config — the hidden complex document
 ├── assets/
-│   └── DefaultLogo.png     # Oxford Risk wordmark (2952×422, 7:1 ratio)
+│   └── DefaultLogo.png     # Acme wordmark (2952×422, 7:1 ratio)
 ├── examples/
 │   ├── minimal.json
 │   ├── styled_report.json
-│   ├── phase2_report.json
-│   └── phase3_tables.json  # Full tables showcase incl. 30-row wrapping table
+│   ├── basic_report.json
+│   └── tables.json  # Full tables showcase incl. 30-row wrapping table
 ├── tests/
 │   └── __init__.py
 ├── .venv/                  # Python 3.14 venv — activate before running
@@ -508,7 +508,7 @@ pdfgen/
 
 **Run any example:**
 ```bash
-.venv/bin/pdfgen examples/phase3_tables.json out.pdf
+.venv/bin/pdfgen examples/tables.json out.pdf
 ```
 
 ---

@@ -200,8 +200,8 @@ A tabular data block. See [Tables](04-tables.md) for the full reference.
   "column_widths": ["50%", "25%", "25%"],
   "column_align":  ["left", "right", "right"],
   "rows": [
-    ["Oxford Risk Growth",   "+8.4%", "9.1%"],
-    ["Oxford Risk Balanced", "+5.2%", "6.3%"]
+    ["Acme Growth",   "+8.4%", "9.1%"],
+    ["Acme Balanced", "+5.2%", "6.3%"]
   ]
 }
 ```

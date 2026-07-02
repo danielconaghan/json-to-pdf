@@ -1,14 +1,14 @@
 {
   "document": {
     "title": "T Johnson - Full Risk Report",
-    "author": "Oxford Risk",
+    "author": "Acme",
     "subject": "Investment Risk Profile — Terence Johnson",
-    "keywords": ["risk profile", "suitable risk level", "Oxford Risk", "financial personality"]
+    "keywords": ["risk profile", "suitable risk level", "Acme", "financial personality"]
   },
 
   "cover": {
     "title": "FULL REPORT",
-    "subtitle": "Powered by Oxford Risk ©",
+    "subtitle": "Powered by Acme ©",
     "logo": "../assets/DefaultLogo.png",
     "background_image": "../assets/abstract_cover.jpg",
     "title_color": "#ffffff",
@@ -16,7 +16,7 @@
   },
 
   "header": {
-    "left": "Powered by Oxford Risk ©",
+    "left": "Powered by Acme ©",
     "separator": true
   },
 

@@ -33,7 +33,7 @@ Include a `"styles"` block in your document. Only the properties you specify are
 }
 ```
 
-This changes h1 to Oxford Navy and adjusts body to 10pt — font, spacing, and every other property remain at their default values.
+This changes h1 to Acme Navy and adjusts body to 10pt — font, spacing, and every other property remain at their default values.
 
 ---
 

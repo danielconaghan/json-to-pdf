@@ -30,7 +30,7 @@ pip install -e .
   "cover": {
     "title":    "My Report",
     "subtitle": "Q2 2026",
-    "author":   "Oxford Risk",
+    "author":   "Acme",
     "date":     "1 July 2026"
   },
   "content": [
@@ -40,8 +40,8 @@ pip install -e .
       "type": "table",
       "headers": ["Fund", "Return YTD", "Sharpe"],
       "rows": [
-        ["Oxford Risk Growth",   "+8.4%", "1.42"],
-        ["Oxford Risk Balanced", "+5.2%", "1.18"]
+        ["Acme Growth",   "+8.4%", "1.42"],
+        ["Acme Balanced", "+5.2%", "1.18"]
       ]
     }
   ]
@@ -96,7 +96,7 @@ Override any default by including the key in your JSON. Everything else is inher
     "right": "Confidential"
   },
   "footer": {
-    "left": "© Oxford Risk 2026"
+    "left": "© Acme 2026"
   }
 }
 ```
@@ -145,10 +145,10 @@ Per-document images travel inline as base64 data URIs; brand assets (fonts, logo
 
 | File | Demonstrates |
 |---|---|
-| `examples/phase2_report.json` | Paragraphs, headings, lists, page structure |
-| `examples/phase3_tables.json` | All table variants, large wrapping table |
-| `examples/phase4_toc.json` | Table of contents, PDF keywords, multi-section report |
-| `examples/phase5_charts.json` | Bar, line, and pie charts in a full report |
+| `examples/basic_report.json` | Paragraphs, headings, lists, page structure |
+| `examples/tables.json` | All table variants, large wrapping table |
+| `examples/toc_report.json` | Table of contents, PDF keywords, multi-section report |
+| `examples/charts.json` | Bar, line, and pie charts in a full report |
 
 ---
 

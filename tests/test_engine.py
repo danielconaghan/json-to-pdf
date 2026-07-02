@@ -37,6 +37,43 @@ def test_renders_inline_base64_image(png_data_uri):
     assert pdf.startswith(b"%PDF-")
 
 
+def test_renders_chart_with_styling_options():
+    config = {
+        "document": {"title": "Chart Styles"},
+        "content": [
+            {
+                "type": "chart", "chart_type": "bar", "title": "Styled",
+                "alt": "styled bar chart",
+                "style": {
+                    "show_values": True, "value_format": "{:.1f}%",
+                    "y_suffix": "%", "legend_position": "top",
+                    "grid_style": "dashed", "tick_size": 8,
+                },
+                "data": {
+                    "labels": ["A", "B"],
+                    "series": [
+                        {"name": "S1", "values": [1.5, 2.5], "color": "#123456"},
+                        {"name": "S2", "values": [1.0, 2.0]},
+                    ],
+                },
+            },
+            {
+                "type": "chart", "chart_type": "line", "alt": "styled line chart",
+                "style": {"legend_position": "bottom", "show_points": True, "marker_size": 3},
+                "data": {
+                    "labels": ["A", "B", "C"],
+                    "series": [
+                        {"name": "S1", "values": [1, 2, 3]},
+                        {"name": "Bench", "values": [1, 1.5, 2], "color": "#888888", "line_style": "dashed"},
+                    ],
+                },
+            },
+        ],
+    }
+    pdf = render_pdf(config)
+    assert pdf.startswith(b"%PDF-")
+
+
 def test_renders_inline_base64_cover_logo(png_data_uri):
     config = {
         "document": {"title": "Inline Logo"},

@@ -38,9 +38,9 @@ Controls PDF metadata and page layout.
 ```json
 "document": {
   "title":    "Q2 2026 Investment Report",
-  "author":   "Oxford Risk",
+  "author":   "Acme",
   "subject":  "Quarterly Performance Review",
-  "keywords": ["quarterly", "performance", "Oxford Risk"],
+  "keywords": ["quarterly", "performance", "Acme"],
   "page": {
     "size":        "A4",
     "orientation": "portrait",
@@ -212,7 +212,7 @@ Produces: one A4 page, default typography, automatic page number in the bottom r
 {
   "document": {
     "title":    "Report Title",
-    "author":   "Oxford Risk",
+    "author":   "Acme",
     "subject":  "Subject",
     "keywords": ["keyword1", "keyword2"],
     "page": {
@@ -231,7 +231,7 @@ Produces: one A4 page, default typography, automatic page number in the bottom r
   "cover": {
     "title":    "Report Title",
     "subtitle": "Subtitle",
-    "author":   "Oxford Risk",
+    "author":   "Acme",
     "date":     "30 June 2026",
     "logo":     "assets/logo.png"
   },
@@ -242,7 +242,7 @@ Produces: one A4 page, default typography, automatic page number in the bottom r
   },
 
   "footer": {
-    "left": "© Oxford Risk 2026"
+    "left": "© Acme 2026"
   },
 
   "table_style": {},

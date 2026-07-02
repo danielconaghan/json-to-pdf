@@ -24,7 +24,7 @@ variable "aws_region" {
 }
 
 variable "state_bucket_name" {
-  description = "Globally unique name for the Terraform state bucket, e.g. oxford-risk-terraform-state"
+  description = "Globally unique name for the Terraform state bucket, e.g. acme-terraform-state"
   type        = string
 }
 

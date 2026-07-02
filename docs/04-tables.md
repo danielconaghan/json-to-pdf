@@ -11,9 +11,9 @@ Tables are one of the most configurable elements in pdfgen. A minimal table need
   "type": "table",
   "headers": ["Fund", "Return", "Risk"],
   "rows": [
-    ["Oxford Risk Growth",   "+8.4%", "9.1%"],
-    ["Oxford Risk Balanced", "+5.2%", "6.3%"],
-    ["Oxford Risk Income",   "+3.1%", "4.2%"]
+    ["Acme Growth",   "+8.4%", "9.1%"],
+    ["Acme Balanced", "+5.2%", "6.3%"],
+    ["Acme Income",   "+3.1%", "4.2%"]
   ]
 }
 ```
@@ -32,7 +32,7 @@ Omit `"headers"` entirely. The table begins directly with data rows. Useful for 
   "column_widths": ["40%", "60%"],
   "rows": [
     ["Report date",   "30 June 2026"],
-    ["Portfolio",     "Oxford Risk Growth"],
+    ["Portfolio",     "Acme Growth"],
     ["Base currency", "GBP"],
     ["Benchmark",     "MSCI World (£)"]
   ]
@@ -155,7 +155,7 @@ Set defaults for **all tables** in the document using the top-level `table_style
 }
 ```
 
-Every table in the document will use the Oxford Navy header, 9pt text, and 6pt padding — unless a specific table overrides those keys.
+Every table in the document will use the Acme Navy header, 9pt text, and 6pt padding — unless a specific table overrides those keys.
 
 ---
 

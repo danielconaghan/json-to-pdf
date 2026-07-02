@@ -1,9 +1,9 @@
 {
   "document": {
-    "title": "Oxford Risk — Q2 2026 Investment Report",
-    "author": "Oxford Risk",
+    "title": "Acme — Q2 2026 Investment Report",
+    "author": "Acme",
     "subject": "Quarterly Investment Review with Table of Contents",
-    "keywords": ["risk management", "quarterly performance", "Oxford Risk", "investment review"]
+    "keywords": ["risk management", "quarterly performance", "Acme", "investment review"]
   },
   "styles": {
     "h1": { "color": "#003366" },
@@ -12,7 +12,7 @@
   "cover": {
     "title": "Q2 2026 Investment Report",
     "subtitle": "Quarterly Review — Table of Contents Edition",
-    "author": "Oxford Risk",
+    "author": "Acme",
     "date": "30 June 2026",
     "logo": "../assets/DefaultLogo.png"
   },
@@ -21,7 +21,7 @@
     "right": "Confidential"
   },
   "footer": {
-    "left": "© Oxford Risk 2026"
+    "left": "© Acme 2026"
   },
 
   "content": [
@@ -30,7 +30,7 @@
     { "type": "page_break" },
 
     { "type": "heading", "level": 1, "text": "Executive Summary" },
-    { "type": "paragraph", "text": "The Oxford Risk managed portfolios delivered strong risk-adjusted returns in Q2 2026, outperforming composite benchmarks by <b>240 basis points</b>. Disciplined position sizing and proactive rebalancing contributed to the outperformance." },
+    { "type": "paragraph", "text": "The Acme managed portfolios delivered strong risk-adjusted returns in Q2 2026, outperforming composite benchmarks by <b>240 basis points</b>. Disciplined position sizing and proactive rebalancing contributed to the outperformance." },
     { "type": "paragraph", "text": "Volatility remained below strategic thresholds throughout the period. The investment committee maintained its tactical overweight in global equities while reducing duration exposure in anticipation of central bank guidance." },
 
     { "type": "heading", "level": 2, "text": "Key Findings" },

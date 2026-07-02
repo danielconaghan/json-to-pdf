@@ -10,7 +10,7 @@ A full-page cover is added automatically when the `cover` block contains a `titl
 "cover": {
   "title":    "Q2 2026 Investment Report",
   "subtitle": "Quarterly Performance Review",
-  "author":   "Oxford Risk",
+  "author":   "Acme",
   "date":     "30 June 2026",
   "logo":     "assets/DefaultLogo.png"
 }
@@ -41,7 +41,7 @@ When `cover.logo` is set, the cover uses a **split design**:
 ```
 ┌─────────────────────────────────┐
 │         [white band]            │
-│       [OXFORD RISK LOGO]        │
+│           [ACME LOGO]           │
 │                                 │
 ├─────────────────────────────────┤
 │                                 │
@@ -49,7 +49,7 @@ When `cover.logo` is set, the cover uses a **split design**:
 │   Quarterly Performance Review  │  ← subtitle_color
 │                                 │
 │                                 │
-│   Oxford Risk     30 June 2026  │  ← subtitle_color
+│   Acme            30 June 2026  │  ← subtitle_color
 └─────────────────────────────────┘
 ```
 
@@ -69,7 +69,7 @@ When `cover.logo` is omitted or the file is not found, the entire page uses the 
 │   Quarterly Performance Review  │
 │                                 │
 │                                 │
-│   Oxford Risk     30 June 2026  │
+│   Acme            30 June 2026  │
 └─────────────────────────────────┘
 ```
 
@@ -82,7 +82,7 @@ The header appears at the top of every **content page** (not the cover). It has 
 ```json
 "header": {
   "logo":      "assets/DefaultLogo.png",
-  "left":      "Oxford Risk",
+  "left":      "Acme",
   "center":    "Q2 2026",
   "right":     "Confidential",
   "separator": true
@@ -109,7 +109,7 @@ The footer appears at the bottom of every content page. It has three text zones 
 
 ```json
 "footer": {
-  "left":      "© Oxford Risk 2026",
+  "left":      "© Acme 2026",
   "center":    "Strictly Confidential",
   "separator": true
 }
@@ -148,9 +148,9 @@ A complete page identity block:
 
 ```json
 "cover": {
-  "title":            "Oxford Risk — Annual Report 2026",
+  "title":            "Acme — Annual Report 2026",
   "subtitle":         "Investment Performance Summary",
-  "author":           "Oxford Risk Investment Management",
+  "author":           "Acme Investment Management",
   "date":             "31 December 2026",
   "logo":             "assets/DefaultLogo.png",
   "background_color": "#003366",
@@ -165,7 +165,7 @@ A complete page identity block:
 },
 
 "footer": {
-  "left":      "© Oxford Risk Investment Management 2026",
+  "left":      "© Acme Investment Management 2026",
   "center":    "Strictly Confidential — Not for Distribution",
   "separator": true
 }

@@ -204,6 +204,12 @@ Labels on the right half of the chart are left-aligned; labels on the left half 
 - `series` — array of series objects. Bar and line support multiple series; pie and donut use only the first.
 - `name` — series label, shown in the legend for bar and line charts. Use `""` to suppress the legend entry.
 - `values` — array of numbers. Must be the same length as `labels`.
+- `color` — optional per-series colour override (`"#rrggbb"`). Takes precedence over the `colors` cycle. Useful for pairing a mandate with a muted tone of the same hue for its benchmark.
+- `line_style` — optional, line charts only: `"solid"` (default), `"dashed"`, `"dotted"`, or `"dashdot"`. The classic use is a dashed grey benchmark against solid portfolio lines.
+
+```json
+{ "name": "Benchmark", "values": [100, 101.2, 102.8], "color": "#888888", "line_style": "dashed" }
+```
 
 ---
 
@@ -244,11 +250,24 @@ Set global defaults in `chart_style` (top-level) and override per-chart in the e
 | `background` | `"#ffffff"` | Chart and axes background colour. |
 | `grid` | `true` | Horizontal grid lines on bar and line charts. No effect on pie or donut. |
 | `grid_color` | `"#eeeeee"` | Grid line colour. |
+| `grid_style` | `"solid"` | Grid line style: `"solid"`, `"dashed"`, `"dotted"`, or `"dashdot"`. |
+| `axis_color` | `"#cccccc"` | Colour of the bottom and left axis lines. |
+| `tick_size` | `9` | Axis tick label font size. The legend uses this size too. |
+| `tick_color` | `"#555555"` | Axis tick label colour. |
+| `title_size` | `11` | Chart title font size. |
+| `title_color` | `"#222222"` | Chart title colour. |
 | `legend` | `true` | Show a legend when series have non-empty names. No effect on pie or donut. |
+| `legend_position` | `"best"` | `"best"` (matplotlib picks a spot inside the plot), `"top"` (horizontal row between title and plot), `"bottom"`, or `"right"`. |
 | `bar_width` | `0.7` | Total grouped bar width as a fraction of slot width (0–1). |
 | `line_width` | `2.0` | Line width in points for line charts. |
 | `show_points` | `false` | Show circle markers at each data point on line charts. |
-| `show_area` | `false` | Fill the area below each line with a semi-transparent tint. |
+| `marker_size` | `4` | Marker size when `show_points` is on. |
+| `show_area` | `false` | Fill the area below each line with a semi-transparent tint. The fill extends down to zero, so this suits zero-anchored data — avoid it for series that hover far above zero (e.g. NAV rebased to 100). |
+| `area_alpha` | `0.07` | Opacity of the area fill (0–1). |
+| `show_values` | `false` | Bar charts only: print each bar's value above it. Best with a single series or few bars — grouped charts with many bars get crowded. |
+| `value_format` | `"{:g}"` | Python format string for `show_values` labels, e.g. `"{:.1f}%"`. |
+| `y_prefix` | `""` | Text before each y-axis tick label, e.g. `"£"`. |
+| `y_suffix` | `""` | Text after each y-axis tick label, e.g. `"%"`. |
 | `dpi` | `150` | Render resolution. 150 is appropriate for print-quality PDFs. |
 | `height_ratio` | `0.55` | Chart height as a multiple of width. `1.0` = square. |
 | `donut_ratio` | `0.5` | Inner hole radius as a fraction of outer radius. Only used by `donut`. |
@@ -295,6 +314,39 @@ Set global defaults in `chart_style` (top-level) and override per-chart in the e
 }
 ```
 
+**Performance vs benchmark** — dashed grey benchmark, horizontal legend above the plot, percentage axis:
+```json
+{
+  "type":       "chart",
+  "chart_type": "line",
+  "title":      "Cumulative Return",
+  "style":      { "legend_position": "top", "y_suffix": "%", "show_points": true },
+  "data": {
+    "labels": ["Jan", "Feb", "Mar", "Apr"],
+    "series": [
+      { "name": "Portfolio", "values": [1.2, 2.8, 2.1, 3.9] },
+      { "name": "Benchmark", "values": [0.9, 2.1, 1.8, 3.0], "color": "#888888", "line_style": "dashed" }
+    ]
+  }
+}
+```
+
+**Labelled single-series bar** — value on each bar, no legend needed:
+```json
+{
+  "type":       "chart",
+  "chart_type": "bar",
+  "title":      "Risk Contribution by Asset Class",
+  "style": {
+    "show_values":  true,
+    "value_format": "{:.1f}%",
+    "y_suffix":     "%",
+    "legend":       false
+  },
+  "data": { ... }
+}
+```
+
 **Asset allocation donut** — square, centred, moderate hole:
 ```json
 {
@@ -317,6 +369,6 @@ Set global defaults in `chart_style` (top-level) and override per-chart in the e
 - **Pie and donut use only the first series.** Additional series in `data.series` are silently ignored.
 - **No horizontal bars.** Bars are always vertical.
 - **No stacked bars.** Multiple series are always grouped (side-by-side).
-- **No axis label customisation.** Y-axis label, axis limits, and tick format use matplotlib's automatic defaults.
+- **No axis titles or limits.** Axis limits use matplotlib's automatic range; there is no named y-axis label. Tick text can be decorated with `y_prefix`/`y_suffix`, but not reformatted beyond that.
 - **No interactive elements.** Charts are static images embedded in the PDF.
 - **Leader line overlap on crowded charts.** When a pie or donut has many small segments, the external labels may overlap. Reduce the number of segments (merge small values into "Other"), increase `height_ratio`, or increase `width` to give the labels more room.

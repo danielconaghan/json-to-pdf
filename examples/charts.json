@@ -1,9 +1,9 @@
 {
   "document": {
-    "title": "Oxford Risk — Performance Analytics",
-    "author": "Oxford Risk",
-    "subject": "Phase 5 Chart Demonstration",
-    "keywords": ["charts", "performance", "analytics", "Oxford Risk"]
+    "title": "Acme — Performance Analytics",
+    "author": "Acme",
+    "subject": "Chart Gallery",
+    "keywords": ["charts", "performance", "analytics", "Acme"]
   },
   "styles": {
     "h1": { "color": "#003366" },
@@ -11,8 +11,8 @@
   },
   "cover": {
     "title": "Performance Analytics",
-    "subtitle": "Visual Reporting — Phase 5 Charts",
-    "author": "Oxford Risk",
+    "subtitle": "Visual Reporting — Chart Gallery",
+    "author": "Acme",
     "date": "30 June 2026",
     "logo": "../assets/DefaultLogo.png"
   },
@@ -21,7 +21,7 @@
     "right": "Confidential"
   },
   "footer": {
-    "left": "© Oxford Risk 2026"
+    "left": "© Acme 2026"
   },
 
   "content": [
@@ -32,16 +32,20 @@
     {
       "type": "chart",
       "chart_type": "bar",
-      "title": "Quarterly Total Return (%)",
+      "title": "Quarterly Total Return",
       "width": "100%",
-      "caption": "Fig. 1 — Quarterly total returns, Growth vs Balanced, Q1–Q4 2026. Benchmark is composite blended index.",
+      "caption": "Fig. 1 — Quarterly total returns, Growth vs Balanced, Q1–Q4 2026. Benchmarks in muted tones of their mandate colour.",
+      "style": {
+        "y_suffix": "%",
+        "legend_position": "top"
+      },
       "data": {
         "labels": ["Q1 2026", "Q2 2026", "Q3 2026", "Q4 2026"],
         "series": [
-          { "name": "Growth",           "values": [3.2,  4.8,  2.9,  5.1] },
-          { "name": "Growth Benchmark", "values": [2.1,  3.6,  2.4,  4.0] },
-          { "name": "Balanced",         "values": [2.0,  3.1,  1.8,  3.4] },
-          { "name": "Balanced Benchmark","values": [1.4,  2.5,  1.5,  2.8] }
+          { "name": "Growth",             "values": [3.2,  4.8,  2.9,  5.1], "color": "#1a1a2e" },
+          { "name": "Growth Benchmark",   "values": [2.1,  3.6,  2.4,  4.0], "color": "#9aa2b8" },
+          { "name": "Balanced",           "values": [2.0,  3.1,  1.8,  3.4], "color": "#2e6da4" },
+          { "name": "Balanced Benchmark", "values": [1.4,  2.5,  1.5,  2.8], "color": "#a9c6e0" }
         ]
       }
     },
@@ -56,13 +60,18 @@
       "chart_type": "line",
       "title": "NAV Progression — Rebased to 100 (Jan 2026)",
       "width": "100%",
-      "caption": "Fig. 2 — Monthly NAV, rebased to 100 at 1 Jan 2026. Growth (navy), Balanced (blue), Income (amber).",
+      "caption": "Fig. 2 — Monthly NAV, rebased to 100 at 1 Jan 2026. Composite benchmark shown dashed.",
+      "style": {
+        "legend_position": "top",
+        "show_points": true
+      },
       "data": {
         "labels": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
         "series": [
-          { "name": "Growth",   "values": [100, 102.4, 105.1, 103.8, 107.2, 110.6, 113.1, 111.8, 115.4, 118.2, 120.1, 122.4] },
-          { "name": "Balanced", "values": [100, 101.4, 103.2, 102.3, 104.8, 107.1, 109.0, 108.2, 111.1, 113.4, 114.8, 116.6] },
-          { "name": "Income",   "values": [100, 100.8, 101.9, 101.2, 102.6, 104.0, 105.2, 104.8, 106.3, 107.5, 108.2, 109.4] }
+          { "name": "Growth",    "values": [100, 102.4, 105.1, 103.8, 107.2, 110.6, 113.1, 111.8, 115.4, 118.2, 120.1, 122.4] },
+          { "name": "Balanced",  "values": [100, 101.4, 103.2, 102.3, 104.8, 107.1, 109.0, 108.2, 111.1, 113.4, 114.8, 116.6] },
+          { "name": "Income",    "values": [100, 100.8, 101.9, 101.2, 102.6, 104.0, 105.2, 104.8, 106.3, 107.5, 108.2, 109.4] },
+          { "name": "Benchmark", "values": [100, 101.2, 102.8, 101.9, 103.9, 105.8, 107.3, 106.6, 109.0, 110.9, 112.0, 113.7], "color": "#888888", "line_style": "dashed" }
         ]
       }
     },
@@ -98,11 +107,16 @@
     {
       "type": "chart",
       "chart_type": "bar",
-      "title": "Risk Contribution by Asset Class (%)",
+      "title": "Risk Contribution by Asset Class",
       "width": "100%",
-      "caption": "Fig. 4 — Ex-ante annualised volatility contribution by asset class.",
+      "caption": "Fig. 4 — Ex-ante annualised volatility contribution by asset class, with value labels.",
       "style": {
-        "bar_width": 0.5
+        "bar_width": 0.5,
+        "show_values": true,
+        "value_format": "{:.1f}%",
+        "y_suffix": "%",
+        "legend": false,
+        "grid_style": "dashed"
       },
       "data": {
         "labels": ["Global Equities", "Fixed Income", "Alternatives", "Real Assets", "Cash"],

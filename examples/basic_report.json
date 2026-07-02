@@ -1,7 +1,7 @@
 {
   "document": {
-    "title": "Oxford Risk — Q2 2026 Performance Report",
-    "author": "Oxford Risk",
+    "title": "Acme — Q2 2026 Performance Report",
+    "author": "Acme",
     "subject": "Quarterly Performance"
   },
   "styles": {
@@ -11,7 +11,7 @@
   "cover": {
     "title": "Q2 2026 Performance Report",
     "subtitle": "Quarterly Investment Review",
-    "author": "Oxford Risk",
+    "author": "Acme",
     "date": "30 June 2026",
     "logo": "../assets/DefaultLogo.png"
   },
@@ -20,7 +20,7 @@
     "right": "Confidential"
   },
   "footer": {
-    "left": "© Oxford Risk 2026"
+    "left": "© Acme 2026"
   },
   "content": [
     { "type": "heading",    "level": 1, "text": "Executive Summary" },

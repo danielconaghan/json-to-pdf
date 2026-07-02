@@ -4,6 +4,7 @@ import numpy as np
 from matplotlib.backends.backend_agg import FigureCanvasAgg
 from matplotlib.figure import Figure
 from matplotlib.patches import Circle
+from matplotlib.ticker import FuncFormatter
 from reportlab.lib.utils import ImageReader
 from reportlab.platypus import Spacer
 
@@ -12,12 +13,14 @@ from ..utils import parse_width
 
 _DEFAULT_COLORS = [
     "#1a1a2e",  # deep navy
-    "#2e6da4",  # oxford blue
+    "#2e6da4",  # steel blue
     "#c69b3a",  # amber
     "#4a8b6e",  # sage green
     "#8b5a6e",  # mauve
     "#4b8fcf",  # sky blue
 ]
+
+_LINE_STYLES = {"solid": "-", "dashed": "--", "dotted": ":", "dashdot": "-."}
 
 
 def build_chart(element, rl_styles, doc, config):
@@ -43,7 +46,10 @@ def build_chart(element, rl_styles, doc, config):
 
     title = element.get("title", "")
     if title:
-        ax.set_title(title, fontsize=11, fontweight="bold", color="#222222", pad=10)
+        # Extra pad clears a top-positioned legend, which sits between title and plot
+        pad = 30 if style.get("legend_position", "best") == "top" else 10
+        ax.set_title(title, fontsize=style.get("title_size", 11), fontweight="bold",
+                     color=style.get("title_color", "#222222"), pad=pad)
 
     _apply_style(ax, style, chart_type)
 
@@ -88,14 +94,22 @@ def _draw_bar(ax, data, style):
 
     for i, s in enumerate(series):
         offset = (i - (n - 1) / 2) * slot
-        ax.bar(
+        rects = ax.bar(
             [xi + offset for xi in x_pos],
             s.get("values", []),
             width=slot * 0.88,
-            color=colors[i % len(colors)],
+            color=s.get("color", colors[i % len(colors)]),
             label=s.get("name", ""),
             zorder=3,
         )
+        if style.get("show_values", False):
+            ax.bar_label(
+                rects,
+                fmt=style.get("value_format", "{:g}").format,
+                fontsize=style.get("tick_size", 9) - 1,
+                color=style.get("tick_color", "#555555"),
+                padding=2,
+            )
 
     rot = _label_rotation(labels)
     ax.set_xticks(x_pos)
@@ -115,20 +129,21 @@ def _draw_line(ax, data, style):
     show_area   = style.get("show_area",   False)
 
     for i, s in enumerate(series):
-        color = colors[i % len(colors)]
+        color = s.get("color", colors[i % len(colors)])
         values = s.get("values", [])
         ax.plot(
             x_pos, values,
             color=color,
             linewidth=style.get("line_width", 2.0),
+            linestyle=_LINE_STYLES.get(s.get("line_style", "solid"), "-"),
             marker="o" if show_points else "none",
-            markersize=4,
+            markersize=style.get("marker_size", 4),
             markeredgewidth=0,
             label=s.get("name", ""),
             zorder=3,
         )
         if show_area:
-            ax.fill_between(x_pos, values, alpha=0.07, color=color)
+            ax.fill_between(x_pos, values, alpha=style.get("area_alpha", 0.07), color=color)
 
     rot = _label_rotation(labels)
     ax.set_xticks(x_pos)
@@ -215,19 +230,50 @@ def _apply_style(ax, style, chart_type):
             ax.spines[spine].set_visible(False)
         return
 
-    ax.spines["bottom"].set_color("#cccccc")
-    ax.spines["left"].set_color("#cccccc")
+    axis_color = style.get("axis_color", "#cccccc")
+    ax.spines["bottom"].set_color(axis_color)
+    ax.spines["left"].set_color(axis_color)
 
     if style.get("grid", True):
-        ax.yaxis.grid(True, color=style.get("grid_color", "#eeeeee"), linewidth=0.7, zorder=0)
+        ax.yaxis.grid(
+            True,
+            color=style.get("grid_color", "#eeeeee"),
+            linestyle=_LINE_STYLES.get(style.get("grid_style", "solid"), "-"),
+            linewidth=0.7,
+            zorder=0,
+        )
         ax.set_axisbelow(True)
 
-    ax.tick_params(axis="both", which="both", length=0, labelsize=9, colors="#555555")
+    tick_size = style.get("tick_size", 9)
+    ax.tick_params(axis="both", which="both", length=0,
+                   labelsize=tick_size, colors=style.get("tick_color", "#555555"))
+
+    y_prefix = style.get("y_prefix", "")
+    y_suffix = style.get("y_suffix", "")
+    if y_prefix or y_suffix:
+        ax.yaxis.set_major_formatter(
+            FuncFormatter(lambda v, _: f"{y_prefix}{v:g}{y_suffix}")
+        )
 
     if style.get("legend", True):
         handles, leg_labels = ax.get_legend_handles_labels()
         if handles and any(leg_labels):
-            ax.legend(handles, leg_labels, fontsize=9, frameon=False, loc="best")
+            _place_legend(ax, handles, leg_labels, style, tick_size)
+
+
+def _place_legend(ax, handles, labels, style, fontsize):
+    position = style.get("legend_position", "best")
+    common = {"fontsize": fontsize, "frameon": False}
+    if position == "top":
+        ax.legend(handles, labels, loc="lower center", bbox_to_anchor=(0.5, 1.0),
+                  ncol=min(len(handles), 4), borderaxespad=0.4, **common)
+    elif position == "bottom":
+        ax.legend(handles, labels, loc="upper center", bbox_to_anchor=(0.5, -0.15),
+                  ncol=min(len(handles), 4), **common)
+    elif position == "right":
+        ax.legend(handles, labels, loc="center left", bbox_to_anchor=(1.02, 0.5), **common)
+    else:
+        ax.legend(handles, labels, loc="best", **common)
 
 
 def _label_rotation(labels):
