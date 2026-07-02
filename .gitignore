@@ -16,6 +16,11 @@ dist/
 build/
 .venv/
 
+# Rendered PDFs are build artefacts — except the example gallery,
+# which is committed deliberately
+*.pdf
+!examples/*.pdf
+
 # Terraform
 .terraform/
 *.tfstate

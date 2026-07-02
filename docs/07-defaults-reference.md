@@ -190,8 +190,8 @@ This is the complete `defaults.json` with every key annotated. Your document is 
     "axis_color":   "#cccccc",  // Bottom/left axis line colour
     "tick_size":    9,          // Tick label font size (legend matches)
     "tick_color":   "#555555",  // Tick label colour
-    "title_size":   11,         // Chart title font size
-    "title_color":  "#222222",  // Chart title colour
+    "title_size":   12,         // Chart title font size (left-aligned on bar/line)
+    "title_color":  "#1a1a2e",  // Chart title colour
     "legend":       true,       // Show legend when series have names
     "legend_position": "best",  // best | top | bottom | right
     "bar_width":    0.7,        // 0–1; total group width as fraction of slot
@@ -204,7 +204,7 @@ This is the complete `defaults.json` with every key annotated. Your document is 
     "value_format": "{:g}",     // Format string for show_values, e.g. "{:.1f}%"
     "y_prefix":     "",         // Text before y-axis tick labels, e.g. "£"
     "y_suffix":     "",         // Text after y-axis tick labels, e.g. "%"
-    "dpi":          150,        // Render resolution
+    "dpi":          300,        // Render resolution (print quality)
     "height_ratio": 0.55,       // Chart height = width × height_ratio
     "donut_ratio":  0.5,        // Inner hole radius as fraction of outer (donut only)
     "space_before": 12,

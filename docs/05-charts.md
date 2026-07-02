@@ -254,8 +254,8 @@ Set global defaults in `chart_style` (top-level) and override per-chart in the e
 | `axis_color` | `"#cccccc"` | Colour of the bottom and left axis lines. |
 | `tick_size` | `9` | Axis tick label font size. The legend uses this size too. |
 | `tick_color` | `"#555555"` | Axis tick label colour. |
-| `title_size` | `11` | Chart title font size. |
-| `title_color` | `"#222222"` | Chart title colour. |
+| `title_size` | `12` | Chart title font size. Titles are left-aligned on bar/line charts, centred on pie/donut. |
+| `title_color` | `"#1a1a2e"` | Chart title colour. |
 | `legend` | `true` | Show a legend when series have non-empty names. No effect on pie or donut. |
 | `legend_position` | `"best"` | `"best"` (matplotlib picks a spot inside the plot), `"top"` (horizontal row between title and plot), `"bottom"`, or `"right"`. |
 | `bar_width` | `0.7` | Total grouped bar width as a fraction of slot width (0–1). |
@@ -268,7 +268,7 @@ Set global defaults in `chart_style` (top-level) and override per-chart in the e
 | `value_format` | `"{:g}"` | Python format string for `show_values` labels, e.g. `"{:.1f}%"`. |
 | `y_prefix` | `""` | Text before each y-axis tick label, e.g. `"£"`. |
 | `y_suffix` | `""` | Text after each y-axis tick label, e.g. `"%"`. |
-| `dpi` | `150` | Render resolution. 150 is appropriate for print-quality PDFs. |
+| `dpi` | `300` | Render resolution. 300 is print quality and stays crisp when zoomed on screen; halve it to shrink file size if charts are numerous. |
 | `height_ratio` | `0.55` | Chart height as a multiple of width. `1.0` = square. |
 | `donut_ratio` | `0.5` | Inner hole radius as a fraction of outer radius. Only used by `donut`. |
 | `space_before` | `12` | Space above the chart in points. |

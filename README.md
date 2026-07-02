@@ -148,7 +148,9 @@ Per-document images travel inline as base64 data URIs; brand assets (fonts, logo
 | `examples/basic_report.json` | Paragraphs, headings, lists, page structure |
 | `examples/tables.json` | All table variants, large wrapping table |
 | `examples/toc_report.json` | Table of contents, PDF keywords, multi-section report |
-| `examples/charts.json` | Bar, line, and pie charts in a full report |
+| `examples/charts.json` | Bar, line, and pie charts with styling options |
+
+Each example has its rendered PDF committed alongside it (same name, `.pdf` extension) — open those to see the output without running anything. If you change an example, re-render its PDF: `pdfgen examples/<name>.json examples/<name>.pdf`.
 
 ---
 

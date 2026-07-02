@@ -32,7 +32,7 @@ def build_chart(element, rl_styles, doc, config):
 
     width_in = width_pt / 72
     height_in = width_in * style.get("height_ratio", 0.55)
-    dpi = style.get("dpi", 150)
+    dpi = style.get("dpi", 300)
     bg = style.get("background", "#ffffff")
 
     fig = Figure(figsize=(width_in, height_in), facecolor=bg)
@@ -47,9 +47,11 @@ def build_chart(element, rl_styles, doc, config):
     title = element.get("title", "")
     if title:
         # Extra pad clears a top-positioned legend, which sits between title and plot
-        pad = 30 if style.get("legend_position", "best") == "top" else 10
-        ax.set_title(title, fontsize=style.get("title_size", 11), fontweight="bold",
-                     color=style.get("title_color", "#222222"), pad=pad)
+        pad = 30 if style.get("legend_position", "best") == "top" else 12
+        # Pie/donut keep a centred title; axis charts read better editorial-style
+        loc = "center" if chart_type in ("pie", "donut") else "left"
+        ax.set_title(title, fontsize=style.get("title_size", 12),
+                     color=style.get("title_color", "#1a1a2e"), pad=pad, loc=loc)
 
     _apply_style(ax, style, chart_type)
 
@@ -111,7 +113,7 @@ def _draw_bar(ax, data, style):
                 padding=2,
             )
 
-    rot = _label_rotation(labels)
+    rot = _label_rotation(labels, ax.figure.get_figwidth())
     ax.set_xticks(x_pos)
     ax.set_xticklabels(labels, rotation=rot, ha="right" if rot else "center")
 
@@ -145,7 +147,7 @@ def _draw_line(ax, data, style):
         if show_area:
             ax.fill_between(x_pos, values, alpha=style.get("area_alpha", 0.07), color=color)
 
-    rot = _label_rotation(labels)
+    rot = _label_rotation(labels, ax.figure.get_figwidth())
     ax.set_xticks(x_pos)
     ax.set_xticklabels(labels, rotation=rot, ha="right" if rot else "center")
 
@@ -263,7 +265,15 @@ def _apply_style(ax, style, chart_type):
 
 def _place_legend(ax, handles, labels, style, fontsize):
     position = style.get("legend_position", "best")
-    common = {"fontsize": fontsize, "frameon": False}
+    common = {
+        "fontsize": fontsize,
+        "frameon": False,
+        # Compact swatches: matplotlib's defaults dominate the row
+        "handlelength": 1.2,
+        "handleheight": 0.9,
+        "handletextpad": 0.5,
+        "columnspacing": 1.4,
+    }
     if position == "top":
         ax.legend(handles, labels, loc="lower center", bbox_to_anchor=(0.5, 1.0),
                   ncol=min(len(handles), 4), borderaxespad=0.4, **common)
@@ -276,7 +286,11 @@ def _place_legend(ax, handles, labels, style, fontsize):
         ax.legend(handles, labels, loc="best", **common)
 
 
-def _label_rotation(labels):
-    if len(labels) > 6 or max((len(str(l)) for l in labels), default=0) > 6:
+def _label_rotation(labels, fig_width_in):
+    # Rotate only when horizontal labels would genuinely collide — slanted
+    # labels cost more in readability than they save in space. ~0.07in per
+    # character approximates 9pt DejaVu; +2 chars per label for breathing room.
+    total_chars = sum(len(str(l)) + 2 for l in labels)
+    if total_chars * 0.07 > fig_width_in:
         return 45
     return 0
