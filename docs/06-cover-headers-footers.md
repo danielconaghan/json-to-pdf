@@ -184,3 +184,5 @@ If your JSON file is at `reports/q2.json` and your logo is at `assets/DefaultLog
 ```
 
 If the logo file is not found at the resolved path, it is silently omitted — the cover/header renders without a logo rather than crashing. Check the path if the logo is missing.
+
+`cover.logo`, `cover.background_image`, and `header.logo` also accept inline base64 data URIs (`"data:image/png;base64,..."`) in place of a path — see [Content Types — inline base64 images](03-content-types.md#image). This is the usual form when the JSON is sent to the [HTTP API](10-lambda-api.md).

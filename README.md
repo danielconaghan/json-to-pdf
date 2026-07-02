@@ -54,6 +54,14 @@ pdfgen report.json output.pdf
 
 This produces a cover page, a headed table, and automatic "Page X of Y" numbering — with no further configuration.
 
+Prefer to stay in Python? The same pipeline is available as a function:
+
+```python
+from pdfgen.engine import render_pdf
+
+pdf_bytes = render_pdf(config)   # config: same shape as the JSON files
+```
+
 ---
 
 ## What you get by default
@@ -68,6 +76,7 @@ This produces a cover page, a headed table, and automatic "Page X of Y" numberin
 - Table of contents (accurate page numbers, multi-pass build)
 - PDF bookmarks and document metadata
 - PDF/UA-1 accessibility — passes veraPDF validation out of the box
+- Images by file path or inline base64 data URI — no filesystem needed
 
 Everything has a sensible default. Your JSON only needs to include the things you want to change.
 
@@ -114,6 +123,21 @@ To use your own fonts, register them as TTF files:
 
 ---
 
+## Running as an API (AWS Lambda)
+
+The repo includes a service layer for deploying pdfgen as an HTTP API on AWS Lambda:
+
+- `api/` — the Lambda handler: POST a document config JSON, receive a presigned S3 URL for the rendered PDF
+- `Dockerfile` — a Lambda container image bundling the library, brand assets, and handler
+
+```bash
+docker build -t pdfgen-api .
+```
+
+Per-document images travel inline as base64 data URIs; brand assets (fonts, logos) are bundled in the image. See [HTTP API — AWS Lambda](docs/10-lambda-api.md) for the request/response contract, configuration, and local testing.
+
+---
+
 ## Example files
 
 | File | Demonstrates |
@@ -138,3 +162,4 @@ To use your own fonts, register them as TTF files:
 | [Defaults Reference](docs/07-defaults-reference.md) | Complete annotated defaults.json |
 | [Limitations](docs/08-limitations.md) | Known constraints and workarounds |
 | [Accessibility — PDF/UA-1](docs/09-accessibility-pdf-ua.md) | Compliance details, font requirements, testing with veraPDF |
+| [HTTP API — AWS Lambda](docs/10-lambda-api.md) | `render_pdf()` entry point, request/response contract, container image, deployment configuration |

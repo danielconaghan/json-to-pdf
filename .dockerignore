@@ -1,0 +1,13 @@
+.git
+.venv
+.pytest_cache
+.claude
+__pycache__
+*.pyc
+*.pdf
+*.egg-info
+tests/
+docs/
+examples/
+.DS_Store
+PLAN.md

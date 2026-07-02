@@ -163,7 +163,7 @@ Embeds a raster image (PNG or JPEG).
 
 | Property | Required | Default | Description |
 |---|---|---|---|
-| `src` | yes | — | Path to the image file. Resolved relative to the JSON file. |
+| `src` | yes | — | Path to the image file (resolved relative to the JSON file), or an inline base64 data URI. |
 | `width` | no | `"100%"` | `"100%"` fills the content width. `"50%"` is half. `"200pt"` is an explicit point value. Fractional percentages (`"66.7%"`) are supported. |
 | `align` | no | `"left"` | `"left"`, `"center"`, or `"right"`. |
 | `caption` | no | none | Caption text rendered below the image using the `caption` style. |
@@ -171,6 +171,19 @@ Embeds a raster image (PNG or JPEG).
 **Height** is always calculated automatically to preserve the image's aspect ratio. You cannot set an explicit height.
 
 **Path resolution:** Paths are resolved relative to the JSON file's directory, not the working directory from which you run pdfgen. A path like `"assets/logo.png"` works if `assets/` is a sibling of your JSON file.
+
+**Inline base64 images:** Instead of a path, `src` may carry the image itself as a data URI — useful when the JSON is sent to the [HTTP API](10-lambda-api.md) and there is no shared filesystem:
+
+```json
+{
+  "type": "image",
+  "src":  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUg...",
+  "alt":  "Quarterly performance chart",
+  "width": "80%"
+}
+```
+
+Supported types are `image/png`, `image/jpeg`, and `image/gif`. A malformed base64 payload raises an error (it is not silently omitted). Any image field accepts a data URI, including `cover.logo`, `cover.background_image`, and `header.logo`.
 
 **Missing files:** If the image file is not found, the element is silently omitted (no crash). Check the path if an image is missing.
 

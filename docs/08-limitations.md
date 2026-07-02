@@ -10,7 +10,7 @@ This page documents the known constraints of pdfgen and, where possible, practic
 Right-to-left scripts (Arabic, Hebrew, etc.) are not supported. ReportLab's core `Paragraph` class lays out text left-to-right. There is no configuration option or workaround within pdfgen.
 
 ### No variable substitution
-JSON values are static strings. There is no template syntax like `{{ investor_name }}` or `$DATE`. If your documents need dynamic content, generate the JSON programmatically (with Python, JavaScript, etc.) before passing it to pdfgen.
+JSON values are static strings. There is no template syntax like `{{ investor_name }}` or `$DATE`. If your documents need dynamic content, build the config programmatically and pass the dict straight to `pdfgen.engine.render_pdf()` (or write the JSON and use the CLI).
 
 ### Inline markup is limited
 Paragraphs, list items, table cells, and headings support a small subset of HTML-like inline tags:

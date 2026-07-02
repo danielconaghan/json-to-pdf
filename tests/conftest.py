@@ -1,4 +1,7 @@
 """Shared fixtures for the pdfgen test suite."""
+import base64
+import io
+
 import pytest
 from reportlab.lib.styles import ParagraphStyle
 
@@ -64,3 +67,13 @@ def minimal_styles(body_style, h1_style):
 @pytest.fixture
 def mock_ctx(minimal_styles):
     return MockCtx(rl_styles=minimal_styles)
+
+
+@pytest.fixture
+def png_data_uri():
+    """A valid base64 PNG data URI (4x4 solid red)."""
+    from PIL import Image as PILImage
+
+    buf = io.BytesIO()
+    PILImage.new("RGB", (4, 4), "red").save(buf, format="PNG")
+    return "data:image/png;base64," + base64.b64encode(buf.getvalue()).decode()
