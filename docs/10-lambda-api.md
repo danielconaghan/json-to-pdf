@@ -106,7 +106,9 @@ The full stack — ECR repository, Lambda, HTTP API Gateway (`POST /render`, IAM
 
 ## Running the handler locally
 
-The handler is plain Python — point it at a bucket and invoke it directly, or use the Lambda runtime interface emulator baked into the base image:
+The quickest full-stack option is `make local`, which deploys everything to the ministack emulator and smoke-tests it — see [infra/README.md](../infra/README.md#local-emulator-ministack).
+
+For handler-only testing without any emulator: the handler is plain Python — point it at a bucket and invoke it directly, or use the Lambda runtime interface emulator baked into the base image:
 
 ```bash
 docker run -p 9000:8080 -e OUTPUT_BUCKET=my-test-bucket \

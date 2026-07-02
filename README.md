@@ -132,6 +132,7 @@ The repo includes a service layer for deploying pdfgen as an HTTP API on AWS Lam
 - `infra/` — Terraform for the full stack: ECR, Lambda, HTTP API Gateway, output bucket ([deploy guide](infra/README.md))
 
 ```bash
+make local            # run the whole stack locally (ministack emulator) + smoke test
 make build            # container image
 make deploy           # push to ECR + terraform apply
 ```

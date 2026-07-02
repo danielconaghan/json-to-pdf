@@ -13,6 +13,7 @@ from reportlab.lib.styles import ParagraphStyle
 from reportlab.platypus import Paragraph, TableStyle
 
 from ..accessibility import TaggedTable
+from ..utils import parse_width
 
 _ALIGN_RL = {"left": TA_LEFT, "center": TA_CENTER, "right": TA_RIGHT}
 _STYLE_CACHE: dict = {}
@@ -61,7 +62,7 @@ def build_table(element, ctx):
 def _resolve_col_widths(spec, num_cols, available, full_width=True):
     """Convert a width spec list into absolute point values.
 
-    Each entry is either a percentage string ("40%") or a numeric point value.
+    Each entry is a percentage ("40%"), a point value ("200pt"), or a number.
     Trailing columns not covered by spec share the remaining width equally.
     When full_width is True (the default), all widths are scaled proportionally
     so the table always spans the full text width.
@@ -70,12 +71,7 @@ def _resolve_col_widths(spec, num_cols, available, full_width=True):
         unit = available / num_cols
         return [unit] * num_cols
 
-    widths = []
-    for s in spec:
-        if isinstance(s, str) and s.endswith("%"):
-            widths.append(available * float(s.rstrip("%")) / 100)
-        else:
-            widths.append(float(s))
+    widths = [parse_width(s, available) for s in spec]
 
     # Fill any unspecified trailing columns
     if len(widths) < num_cols:

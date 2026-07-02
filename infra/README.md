@@ -64,8 +64,40 @@ Set `enable_iam_auth = false` only for local emulator testing.
 
 ## Local emulator (ministack)
 
-The provider supports pointing every AWS call at a local emulator:
+One command runs the whole stack locally, end to end:
 
 ```bash
-terraform apply -var 'local_endpoint=http://localhost:4566' -var 'enable_iam_auth=false'
+make local        # from the repo root
 ```
+
+It starts the ministack emulator, builds and tags the image, applies this
+Terraform against it, POSTs `examples/minimal.json` to the deployed API, and
+downloads the resulting PDF to `local-test.pdf`. Tear down with
+`make local-down`. Requirements: Docker, `make`, `nc`, and the
+[terraform-ministack](../../terraform-ministack) repo checked out as a
+sibling directory (override with `MINISTACK_DIR=...`). Terraform itself runs
+in Docker — no local install needed.
+
+The individual stages are also callable: `make local-up`, `make local-deploy`
+(rerun after code changes), `make local-test`.
+
+How it works, for when you need to poke at it by hand:
+
+- The emulator starts with `infra/local/ministack-override.yml` applied,
+  which sets `LAMBDA_DOCKER_PLATFORM=linux/arm64` to match our images
+  (the ministack compose file defaults to amd64 for its PHP demo).
+- No real image push happens: ministack resolves image URIs against the
+  host docker daemon before pulling, so a `docker tag` to the fake ECR URI
+  (`000000000000.dkr.ecr.us-east-1.amazonaws.com/pdfgen-api:<tag>`) is enough.
+  Each deploy uses a fresh timestamp tag so rebuilt images actually load.
+- Terraform runs on the `ministack-net` Docker network with
+  `-var 'local_endpoint=http://ministack:4566' -var 'enable_iam_auth=false'`.
+- The `render_endpoint` output uses a `*.execute-api.localhost` hostname,
+  which macOS does not resolve — curl needs
+  `--resolve <api-id>.execute-api.localhost:4566:127.0.0.1`.
+- Presigned URLs in responses point at `host.docker.internal:4566` (the
+  endpoint as seen from inside the Lambda container); swap the host for
+  `localhost` when fetching from the host machine.
+- Emulator state is in-memory: restarting ministack loses all deployed
+  resources, and the next `terraform apply` recreates them (you'll see a
+  harmless "resource not found during refresh" warning).

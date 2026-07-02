@@ -8,6 +8,7 @@ from reportlab.lib.utils import ImageReader
 from reportlab.platypus import Spacer
 
 from ..accessibility import TaggedCaption, TaggedChart
+from ..utils import parse_width
 
 _DEFAULT_COLORS = [
     "#1a1a2e",  # deep navy
@@ -24,12 +25,7 @@ def build_chart(element, rl_styles, doc, config):
     style = {**config.get("chart_style", {}), **element.get("style", {})}
     data = element.get("data", {})
 
-    available = doc.width
-    width_spec = element.get("width", "100%")
-    if isinstance(width_spec, str) and width_spec.endswith("%"):
-        width_pt = available * float(width_spec.rstrip("%")) / 100
-    else:
-        width_pt = float(width_spec)
+    width_pt = parse_width(element.get("width", "100%"), doc.width)
 
     width_in = width_pt / 72
     height_in = width_in * style.get("height_ratio", 0.55)

@@ -1,6 +1,6 @@
 import pytest
 
-from pdfgen.utils import resolve_path
+from pdfgen.utils import parse_width, resolve_path
 
 
 def test_none_input_returns_none(tmp_path):
@@ -37,3 +37,38 @@ def test_relative_path_no_base_uses_cwd(tmp_path, monkeypatch):
     f = tmp_path / "local.txt"
     f.touch()
     assert resolve_path("local.txt", None) == str(f)
+
+
+def test_parse_width_percentage_of_available():
+    assert parse_width("50%", 400) == 200
+
+
+def test_parse_width_fractional_percentage():
+    assert parse_width("66.7%", 300) == pytest.approx(200.1)
+
+
+def test_parse_width_points_suffix():
+    assert parse_width("150pt", 400) == 150
+
+
+def test_parse_width_bare_numeric_string():
+    assert parse_width("120", 400) == 120
+
+
+def test_parse_width_plain_number():
+    assert parse_width(96, 400) == 96
+    assert parse_width(96.5, 400) == 96.5
+
+
+def test_parse_width_whitespace_tolerated():
+    assert parse_width(" 80% ", 400) == 320
+
+
+def test_parse_width_invalid_spec_raises_with_message():
+    with pytest.raises(ValueError, match="invalid width '12em'"):
+        parse_width("12em", 400)
+
+
+def test_parse_width_none_raises():
+    with pytest.raises(ValueError, match="invalid width"):
+        parse_width(None, 400)

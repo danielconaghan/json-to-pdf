@@ -1,0 +1,7 @@
+# Compose override applied on top of the ministack repo's docker-compose.yml.
+# Ministack pins LAMBDA_DOCKER_PLATFORM to linux/amd64 for its PHP demo; our
+# images are arm64, and the Lambda container platform must match the image.
+services:
+  ministack:
+    environment:
+      LAMBDA_DOCKER_PLATFORM: linux/arm64
