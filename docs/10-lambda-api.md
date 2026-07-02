@@ -106,9 +106,62 @@ The full stack — ECR repository, Lambda, HTTP API Gateway (`POST /render`, IAM
 
 ## Running the handler locally
 
-The quickest full-stack option is `make local`, which deploys everything to the ministack emulator and smoke-tests it — see [infra/README.md](../infra/README.md#local-emulator-ministack).
+### Step-by-step: render an example through the local API
 
-For handler-only testing without any emulator: the handler is plain Python — point it at a bucket and invoke it directly, or use the Lambda runtime interface emulator baked into the base image:
+Copy-paste from the repo root. Requires Docker running and the
+[terraform-ministack](../../terraform-ministack) repo checked out as a
+sibling directory.
+
+```bash
+# 1. Start the emulator, deploy the stack, and run a smoke test.
+#    First run takes a few minutes (image builds). Re-run after code changes.
+make local
+
+# 2. Capture the API endpoint into a variable.
+#    (It contains a random id that changes every emulator restart —
+#    never hardcode it.)
+ENDPOINT=$(make -s local-endpoint)
+echo "$ENDPOINT"
+#   → http://30655bb2.execute-api.localhost:4566/render
+
+# 3. Extract the hostname for curl.
+#    (macOS can't resolve *.execute-api.localhost on its own, so we tell
+#    curl explicitly that it lives at 127.0.0.1.)
+HOST=$(echo "$ENDPOINT" | sed -E 's|https?://([^:/]+).*|\1|')
+
+# 4. POST your JSON. The response is NOT the PDF — it's JSON containing
+#    a presigned URL where the PDF is waiting.
+RESPONSE=$(curl -sS --resolve "$HOST:4566:127.0.0.1" \
+  -X POST "$ENDPOINT" -d @examples/charts.json)
+echo "$RESPONSE"
+#   → {"url": "http://host.docker.internal:4566/...", "key": "documents/...", ...}
+
+# 5. Pull the URL out of the response and fix the hostname.
+#    (host.docker.internal is the emulator's address as seen from inside
+#    the Lambda container — from your machine it's just localhost.)
+URL=$(echo "$RESPONSE" \
+  | python3 -c 'import json,sys; print(json.load(sys.stdin)["url"])' \
+  | sed 's|host.docker.internal|localhost|')
+
+# 6. Download the PDF.
+curl -sS "$URL" -o report.pdf
+open report.pdf
+
+# 7. When you're done, tear everything down.
+make local-down
+```
+
+To render a different document, change the file in step 4 (`-d @examples/tables.json`, `-d @my-report.json`, …) and repeat steps 4–6.
+
+**Shortcut:** steps 2–6 are exactly what `make local-test` does — one command, any file:
+
+```bash
+make local-test FILE=examples/charts.json OUT=report.pdf
+```
+
+### Handler-only, without the emulator
+
+The handler is plain Python — point it at a bucket and invoke it directly, or use the Lambda runtime interface emulator baked into the base image:
 
 ```bash
 docker run -p 9000:8080 -e OUTPUT_BUCKET=my-test-bucket \

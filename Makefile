@@ -18,7 +18,7 @@ IMAGE    ?= pdfgen-api
 ACCOUNT   = $(shell aws sts get-caller-identity --query Account --output text)
 ECR_REPO  = $(ACCOUNT).dkr.ecr.$(REGION).amazonaws.com/$(IMAGE)
 
-.PHONY: build push deploy plan test local local-up local-deploy local-test local-down
+.PHONY: build push deploy plan test local local-up local-deploy local-endpoint local-test local-down
 
 build:
 	docker build --platform $(PLATFORM) -t $(IMAGE):$(TAG) .
@@ -66,15 +66,23 @@ local-deploy:
 	$(LOCAL_TF) init -input=false > /dev/null
 	$(LOCAL_TF) apply -auto-approve $(LOCAL_TF_VARS) -var 'image_tag=$(LOCAL_TAG)'
 
+local-endpoint:
+	@$(LOCAL_TF) output -raw render_endpoint && echo
+
+# Render any config through the local API in one step:
+#   make local-test FILE=examples/charts.json OUT=charts.pdf
+FILE ?= examples/minimal.json
+OUT  ?= local-test.pdf
+
 local-test:
 	@ENDPOINT=$$($(LOCAL_TF) output -raw render_endpoint); \
 	HOST=$$(echo $$ENDPOINT | sed -E 's|https?://([^:/]+).*|\1|'); \
-	echo "POST $$ENDPOINT"; \
-	RESP=$$(curl -sS --max-time 120 --resolve $$HOST:4566:127.0.0.1 -X POST "$$ENDPOINT" -d @examples/minimal.json); \
+	echo "POST $$ENDPOINT < $(FILE)"; \
+	RESP=$$(curl -sS --max-time 120 --resolve $$HOST:4566:127.0.0.1 -X POST "$$ENDPOINT" -d @$(FILE)); \
 	echo "$$RESP"; \
 	URL=$$(echo "$$RESP" | python3 -c 'import json,sys; print(json.load(sys.stdin)["url"])' | sed 's|host.docker.internal|localhost|'); \
-	curl -sS "$$URL" -o local-test.pdf; \
-	file local-test.pdf
+	curl -sS "$$URL" -o $(OUT); \
+	file $(OUT)
 
 local-down:
 	-$(LOCAL_TF) destroy -auto-approve $(LOCAL_TF_VARS)
