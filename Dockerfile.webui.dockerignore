@@ -1,0 +1,19 @@
+# Build context for the web UI image (BuildKit uses this in place of the
+# root .dockerignore when building with -f Dockerfile.webui). Unlike the
+# Lambda image, the UI DOES need examples/ (the picker) and assets/ (logos),
+# so those are deliberately not excluded here.
+.git
+.venv
+.pytest_cache
+.claude
+__pycache__
+*.pyc
+*.egg-info
+*.pdf
+.DS_Store
+docs/
+tests/
+infra/
+docker/
+api/
+PLAN.md

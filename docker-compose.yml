@@ -1,0 +1,16 @@
+# Run the pdfgen web UI in a container — nothing installed on the host.
+#
+#   docker compose up --build        build and start → http://localhost:8000
+#   docker compose down              stop and remove
+#
+# Binds to localhost by default. To reach it from other machines on the LAN,
+# change the published side of the port map to "0.0.0.0:8000:8000".
+services:
+  webui:
+    build:
+      context: .
+      dockerfile: Dockerfile.webui
+    image: pdfgen-webui
+    ports:
+      - "127.0.0.1:8000:8000"
+    restart: unless-stopped

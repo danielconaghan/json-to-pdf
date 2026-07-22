@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>pdfgen</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo">pdf<span class="accent">gen</span></span>
+      <span class="tagline">JSON &rarr; PDF</span>
+      <a class="docs-link" href="/docs" target="_blank" rel="noopener"
+         title="Interactive API documentation">API docs &nearr;</a>
+    </div>
+
+    <nav class="modes" role="tablist" aria-label="View">
+      <button id="mode-render" class="mode-btn active" role="tab" aria-selected="true">Render</button>
+      <button id="mode-compose" class="mode-btn" role="tab" aria-selected="false">Compose</button>
+    </nav>
+
+    <div class="controls" id="render-controls">
+      <label class="field">
+        <span>Example</span>
+        <select id="example-select">
+          <option value="">Load an example&hellip;</option>
+        </select>
+      </label>
+      <button id="format-btn" class="btn" title="Reformat the JSON">Format</button>
+      <button id="download-btn" class="btn btn-primary">Download PDF</button>
+    </div>
+  </header>
+
+  <!-- Render view: one document config -> PDF preview -->
+  <section id="render-view" class="view">
+    <main class="split">
+      <section class="pane pane-editor">
+        <div class="pane-head">
+          <h2>Document JSON</h2>
+          <span id="editor-status" class="status"></span>
+        </div>
+        <textarea id="editor" class="code-area" spellcheck="false" autocomplete="off"
+                  autocapitalize="off"></textarea>
+      </section>
+
+      <section class="pane pane-preview">
+        <div class="pane-head">
+          <h2>Preview</h2>
+          <div class="zoom">
+            <button id="zoom-out" class="zoom-btn" title="Zoom out" aria-label="Zoom out">&minus;</button>
+            <span id="zoom-level" class="zoom-level" title="Current zoom">100%</span>
+            <button id="zoom-in" class="zoom-btn" title="Zoom in" aria-label="Zoom in">+</button>
+            <button id="zoom-fit" class="zoom-btn" title="Fit page width">Fit</button>
+          </div>
+          <span id="preview-status" class="status"></span>
+        </div>
+        <div class="preview-body">
+          <div id="error-banner" class="error-banner" hidden></div>
+          <div id="preview" class="pdf-scroll" tabindex="0" role="document" aria-label="PDF preview"></div>
+        </div>
+      </section>
+    </main>
+  </section>
+
+  <!-- Compose view: template + values + translations -> composed JSON + PDF -->
+  <section id="compose-view" class="view" hidden>
+    <main class="split">
+      <section class="pane pane-inputs">
+        <div class="input-block input-template">
+          <div class="pane-head">
+            <h2>Template</h2>
+            <span id="tpl-status" class="status"></span>
+          </div>
+          <textarea id="tpl-editor" class="code-area" spellcheck="false" autocomplete="off"
+                    autocapitalize="off"></textarea>
+        </div>
+        <div class="input-block">
+          <div class="pane-head">
+            <h2>Values</h2>
+            <span id="values-status" class="status"></span>
+          </div>
+          <textarea id="values-editor" class="code-area" spellcheck="false" autocomplete="off"
+                    autocapitalize="off"></textarea>
+        </div>
+        <div class="input-block">
+          <div class="pane-head">
+            <h2>Translations</h2>
+            <span id="translations-status" class="status"></span>
+          </div>
+          <textarea id="translations-editor" class="code-area" spellcheck="false" autocomplete="off"
+                    autocapitalize="off"></textarea>
+        </div>
+      </section>
+
+      <section class="pane pane-preview">
+        <div class="pane-head">
+          <div class="subtabs" role="tablist" aria-label="Output">
+            <button id="compose-tab-pdf" class="subtab active" role="tab" aria-selected="true">PDF</button>
+            <button id="compose-tab-json" class="subtab" role="tab" aria-selected="false">JSON</button>
+          </div>
+          <div class="zoom">
+            <button id="compose-zoom-out" class="zoom-btn" title="Zoom out" aria-label="Zoom out">&minus;</button>
+            <span id="compose-zoom-level" class="zoom-level" title="Current zoom">100%</span>
+            <button id="compose-zoom-in" class="zoom-btn" title="Zoom in" aria-label="Zoom in">+</button>
+            <button id="compose-zoom-fit" class="zoom-btn" title="Fit page width">Fit</button>
+          </div>
+          <span id="compose-status" class="status"></span>
+        </div>
+        <div class="preview-body">
+          <div id="compose-error" class="error-banner" hidden></div>
+          <div id="compose-pdf-pane" class="output-pane">
+            <div id="compose-preview" class="pdf-scroll" tabindex="0" role="document" aria-label="Composed PDF preview"></div>
+          </div>
+          <div id="compose-json-pane" class="output-pane" hidden>
+            <pre id="compose-json" class="json-output" tabindex="0" aria-label="Composed JSON"></pre>
+          </div>
+        </div>
+      </section>
+    </main>
+  </section>
+
+  <script type="module" src="/app.js"></script>
+  <script type="module" src="/mode.js"></script>
+</body>
+</html>

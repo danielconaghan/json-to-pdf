@@ -1,0 +1,34 @@
+# Web UI container: build a document config and preview the real PDF.
+# Self-contained — nothing runs on the host. Build and run with:
+#   docker compose up --build      → http://localhost:8000
+#
+# This is a plain web server and is unrelated to ./Dockerfile, which is the
+# AWS Lambda image (different base, different entrypoint).
+FROM python:3.12-slim
+
+# matplotlib writes a font cache on first chart render; give it a writable home.
+# PYTHONPATH lets the app import from the source tree at /app so REPO_ROOT (and
+# therefore base_path for asset/example resolution) points at /app, not
+# site-packages.
+ENV MPLCONFIGDIR=/tmp/mpl \
+    PYTHONUNBUFFERED=1 \
+    PYTHONPATH=/app
+
+WORKDIR /app
+
+# Install pdfgen + web UI dependencies first, from just the metadata and the
+# pdfgen package, so this layer caches across edits to webui/ and the assets.
+COPY pyproject.toml ./
+COPY pdfgen/ ./pdfgen/
+RUN pip install --no-cache-dir ".[ui]"
+
+# Runtime source and data. webui/ stays as source (not installed) so the app
+# resolves assets/ and examples/ relative to /app. Logo paths in a config
+# (e.g. "assets/DefaultLogo.png") resolve against /app; the example picker
+# lists examples/*.json.
+COPY webui/ ./webui/
+COPY assets/ ./assets/
+COPY examples/ ./examples/
+
+EXPOSE 8000
+CMD ["uvicorn", "webui.server:app", "--host", "0.0.0.0", "--port", "8000"]

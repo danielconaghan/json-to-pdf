@@ -1,0 +1,309 @@
+:root {
+  --bg: #f4f5f7;
+  --surface: #ffffff;
+  --border: #d9dce1;
+  --text: #1c2430;
+  --muted: #6b7480;
+  --accent: #1f6feb;
+  --accent-text: #ffffff;
+  --error-bg: #fdecea;
+  --error-border: #f3b5ae;
+  --error-text: #8a1c11;
+  --ok: #1a7f4b;
+  --editor-bg: #fbfbfc;
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0f1319;
+    --surface: #161b22;
+    --border: #2b323c;
+    --text: #e6e9ee;
+    --muted: #8b95a1;
+    --accent: #388bfd;
+    --accent-text: #ffffff;
+    --error-bg: #3a1512;
+    --error-border: #6e2b23;
+    --error-text: #ffb3aa;
+    --ok: #56d38a;
+    --editor-bg: #0d1117;
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+  }
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color: var(--text);
+  background: var(--bg);
+}
+
+/* ---- top bar ---- */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.6rem 1rem;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  z-index: 2;
+}
+
+.brand { display: flex; align-items: baseline; gap: 0.6rem; }
+.logo { font-size: 1.25rem; font-weight: 700; letter-spacing: -0.01em; }
+.logo .accent { color: var(--accent); }
+.tagline { color: var(--muted); font-size: 0.85rem; }
+.docs-link {
+  color: var(--muted);
+  font-size: 0.85rem;
+  text-decoration: none;
+  border-bottom: 1px dotted var(--muted);
+}
+.docs-link:hover { color: var(--accent); border-bottom-color: var(--accent); }
+
+.controls { display: flex; align-items: center; gap: 0.6rem; }
+
+.field { display: flex; flex-direction: column; font-size: 0.7rem; color: var(--muted); }
+.field span { margin-bottom: 2px; text-transform: uppercase; letter-spacing: 0.04em; }
+.field select {
+  font-size: 0.85rem;
+  padding: 0.35rem 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--surface);
+  color: var(--text);
+}
+
+.btn {
+  font-size: 0.85rem;
+  padding: 0.45rem 0.85rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+  align-self: flex-end;
+}
+.btn:hover { border-color: var(--accent); }
+.btn:disabled { opacity: 0.5; cursor: default; }
+.btn-primary { background: var(--accent); color: var(--accent-text); border-color: var(--accent); }
+
+/* ---- mode toggle (Render / Compose) ---- */
+.modes {
+  display: inline-flex;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  overflow: hidden;
+}
+.mode-btn {
+  font-size: 0.85rem;
+  padding: 0.4rem 0.9rem;
+  border: 0;
+  background: var(--surface);
+  color: var(--muted);
+  cursor: pointer;
+}
+.mode-btn + .mode-btn { border-left: 1px solid var(--border); }
+.mode-btn:hover { color: var(--text); }
+.mode-btn.active { background: var(--accent); color: var(--accent-text); }
+
+/* ---- view containers (one visible at a time) ---- */
+.view {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+.view[hidden] { display: none; }
+
+/* ---- split panes ---- */
+.split {
+  flex: 1;
+  display: grid;
+  grid-template-columns: minmax(320px, 1fr) minmax(320px, 1.3fr);
+  min-height: 0;
+}
+
+.pane {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  background: var(--surface);
+}
+.pane-editor { border-right: 1px solid var(--border); }
+
+.pane-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 0.9rem;
+  border-bottom: 1px solid var(--border);
+}
+.pane-head h2 { margin: 0; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); }
+
+.status { font-size: 0.78rem; color: var(--muted); }
+.status.ok { color: var(--ok); }
+.status.err { color: var(--error-text); }
+
+.code-area {
+  flex: 1;
+  min-height: 0;
+  border: 0;
+  resize: none;
+  padding: 1rem;
+  font-family: "SF Mono", ui-monospace, Menlo, Consolas, monospace;
+  font-size: 13px;
+  line-height: 1.5;
+  tab-size: 2;
+  background: var(--editor-bg);
+  color: var(--text);
+  outline: none;
+}
+
+/* ---- preview ---- */
+.zoom { display: flex; align-items: center; gap: 0.3rem; margin-left: auto; margin-right: 0.9rem; }
+.zoom-btn {
+  min-width: 1.9rem;
+  padding: 0.2rem 0.45rem;
+  font-size: 0.85rem;
+  line-height: 1;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+}
+.zoom-btn:hover { border-color: var(--accent); }
+.zoom-level {
+  min-width: 3.2rem;
+  text-align: center;
+  font-size: 0.78rem;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.preview-body { position: relative; flex: 1; min-height: 0; }
+
+/* Scroll container we own — so re-rendering the document keeps the user's
+   scroll position and zoom instead of snapping back to page 1 like the
+   browser's built-in PDF viewer does on every reload. */
+.pdf-scroll {
+  position: absolute;
+  inset: 0;
+  overflow: auto;
+  background: #52565b;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+.pdf-page {
+  display: block;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  max-width: none;
+}
+
+/* Transient outline over the element the editor caret (or a click) points at.
+   Positioned by app.js relative to the .pdf-scroll container, then fades out. */
+.sync-highlight {
+  position: absolute;
+  z-index: 2;
+  pointer-events: none;
+  border-radius: 3px;
+  background: color-mix(in srgb, var(--accent) 22%, transparent);
+  box-shadow: 0 0 0 2px var(--accent);
+  animation: sync-flash 1.2s ease-out forwards;
+}
+
+@keyframes sync-flash {
+  0% { opacity: 0; }
+  15% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+.error-banner {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  right: 0.75rem;
+  z-index: 1;
+  padding: 0.7rem 0.9rem;
+  background: var(--error-bg);
+  border: 1px solid var(--error-border);
+  border-radius: 8px;
+  color: var(--error-text);
+  font-size: 0.85rem;
+  font-family: "SF Mono", ui-monospace, Menlo, Consolas, monospace;
+  white-space: pre-wrap;
+  box-shadow: var(--shadow);
+}
+
+/* ---- compose view: three stacked inputs on the left ---- */
+.pane-inputs {
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid var(--border);
+}
+.input-block {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+.input-block + .input-block { border-top: 1px solid var(--border); }
+/* The template is the largest input; give it more vertical room. */
+.input-block.input-template { flex: 2; }
+
+/* ---- compose view: PDF / JSON sub-tabs on the right ---- */
+.subtabs { display: inline-flex; gap: 0.25rem; }
+.subtab {
+  font-size: 0.78rem;
+  padding: 0.25rem 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  background: var(--surface);
+  color: var(--muted);
+  cursor: pointer;
+}
+.subtab:hover { color: var(--text); }
+.subtab.active { background: var(--accent); color: var(--accent-text); border-color: var(--accent); }
+
+/* Each output pane fills the preview body; one is shown at a time. */
+.output-pane { position: absolute; inset: 0; }
+.output-pane[hidden] { display: none; }
+
+.json-output {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  overflow: auto;
+  padding: 1rem;
+  background: var(--editor-bg);
+  color: var(--text);
+  font-family: "SF Mono", ui-monospace, Menlo, Consolas, monospace;
+  font-size: 13px;
+  line-height: 1.5;
+  tab-size: 2;
+  white-space: pre;
+  outline: none;
+}
+
+@media (max-width: 720px) {
+  .split { grid-template-columns: 1fr; grid-template-rows: 1fr 1fr; }
+  .pane-editor { border-right: 0; border-bottom: 1px solid var(--border); }
+  .pane-inputs { border-right: 0; border-bottom: 1px solid var(--border); }
+}

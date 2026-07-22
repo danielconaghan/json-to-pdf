@@ -100,7 +100,7 @@ def _render_element(element, ctx):
     return builder(element, ctx) if builder else []
 
 
-def render(config, output_path, base_path=None):
+def render(config, output_path, base_path=None, source_map=None):
     register_builtin_fonts()
     config["_base_path"] = base_path  # propagated to template drawing functions
     page_cfg = config["document"]["page"]
@@ -120,6 +120,7 @@ def render(config, output_path, base_path=None):
         subject=doc_meta.get("subject", ""),
     )
     doc.keywords = doc_meta.get("keywords") or []
+    doc.source_map = source_map  # None on the normal render path
 
     templates = []
     if has_cover:
@@ -138,8 +139,12 @@ def render(config, output_path, base_path=None):
     if has_cover:
         story.extend([NextPageTemplate("standard"), PageBreak()])
 
-    for element in config["content"]:
-        story.extend(_render_element(element, ctx))
+    for index, element in enumerate(config["content"]):
+        flowables = _render_element(element, ctx)
+        if source_map is not None:
+            for flowable in flowables:
+                source_map.instrument(flowable, index)
+        story.extend(flowables)
 
     NumberedCanvas = make_numbered_canvas_class(config)
     has_toc = any(e.get("type") == "toc" for e in config["content"])

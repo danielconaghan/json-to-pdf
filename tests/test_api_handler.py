@@ -75,6 +75,54 @@ def test_non_object_json_is_400(stub_s3):
     assert result["statusCode"] == 400
 
 
+COMPOSE_BODY = json.dumps({
+    "template": {
+        "document": {"title": "Composed"},
+        "content": [{"type": "heading", "level": 1, "key": "title"}],
+    },
+    "values": {"name": "Dana"},
+    "translations": {"title": "Results for {{name}}"},
+})
+
+
+def test_compose_request_renders_and_returns_composed_config(stub_s3):
+    result = handler.lambda_handler({"body": COMPOSE_BODY}, None)
+
+    assert result["statusCode"] == 200
+    payload = json.loads(result["body"])
+    assert payload["url"].startswith("https://example.com/documents/")
+    # The composed config is returned alongside the URL, never discarded, and
+    # carries no template vocabulary — the key resolved to interpolated text.
+    assert payload["config"]["content"] == [
+        {"type": "heading", "level": 1, "text": "Results for Dana"}
+    ]
+
+    [put] = stub_s3.put_calls
+    assert put["Body"].startswith(b"%PDF-")
+
+
+def test_render_request_omits_config_from_response(stub_s3):
+    # A plain render request (no `template`) behaves exactly as before.
+    result = handler.lambda_handler({"body": MINIMAL_BODY}, None)
+    assert result["statusCode"] == 200
+    assert "config" not in json.loads(result["body"])
+
+
+def test_compose_failure_is_400_before_any_render(stub_s3):
+    # No variant matches -> ComposeError -> 400, and nothing is stored.
+    body = json.dumps({
+        "template": {
+            "content": [{"variants": [{"when": {"b": "low"}, "content": []}]}]
+        },
+        "values": {"b": "high"},
+        "translations": {},
+    })
+    result = handler.lambda_handler({"body": body}, None)
+    assert result["statusCode"] == 400
+    assert "no variant matched" in json.loads(result["body"])["error"]
+    assert stub_s3.put_calls == []
+
+
 def test_bad_inline_image_is_400(stub_s3):
     body = json.dumps({
         "content": [{"type": "image", "src": "data:image/png;base64,!!!", "alt": "x"}],

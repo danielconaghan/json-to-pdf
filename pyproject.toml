@@ -18,11 +18,17 @@ dependencies = [
 api = [
     "boto3>=1.34",
 ]
+ui = [
+    "fastapi>=0.110",
+    "uvicorn>=0.29",
+]
 dev = [
     "pytest>=7",
     "pytest-cov>=4",
     "pip-audit>=2",
     "boto3>=1.34",
+    "fastapi>=0.110",
+    "httpx>=0.27",
 ]
 
 [project.scripts]
@@ -30,10 +36,11 @@ pdfgen = "pdfgen.cli:main"
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["pdfgen*"]
+include = ["pdfgen*", "webui*"]
 
 [tool.setuptools.package-data]
 pdfgen = ["defaults.json"]
+webui = ["static/*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

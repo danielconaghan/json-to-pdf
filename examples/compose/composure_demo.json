@@ -1,0 +1,54 @@
+{
+  "template": {
+    "document": { "title": "Risk Profile Report" },
+    "cover": {
+      "title": "Risk Profile Report",
+      "subtitle": "Prepared for a valued client"
+    },
+    "content": [
+      { "type": "heading", "level": 1, "key": "report.title" },
+      { "type": "paragraph", "key": "report.intro" },
+      {
+        "id": "composure_section",
+        "type": "group",
+        "variants": [
+          {
+            "when": { "composure": "low" },
+            "content": [
+              { "type": "heading", "level": 2, "key": "results.composure.low_heading" },
+              { "type": "paragraph", "key": "results.composure.low_description" }
+            ]
+          },
+          {
+            "when": { "composure": "medium" },
+            "content": [
+              { "type": "heading", "level": 2, "key": "results.composure.medium_heading" },
+              { "type": "paragraph", "key": "results.composure.medium_description" }
+            ]
+          },
+          {
+            "when": { "composure": "high" },
+            "content": [
+              { "type": "heading", "level": 2, "key": "results.composure.high_heading" },
+              { "type": "paragraph", "key": "results.composure.high_description" }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "values": {
+    "client_name": "Dana Okoro",
+    "composure": "medium"
+  },
+  "translations": {
+    "report.title": "Results for {{client_name}}",
+    "report.intro": "This report summarises the risk profile assessed for {{client_name}}. The section below reflects the composure band from the latest questionnaire.",
+    "results.composure.low_heading": "Composure: Low",
+    "results.composure.low_description": "{{client_name}} tends to feel anxious when markets fall and may be tempted to sell at the wrong moment. Regular reassurance and a focus on the long-term plan will help.",
+    "results.composure.medium_heading": "Composure: Medium",
+    "results.composure.medium_description": "{{client_name}} stays reasonably calm through market ups and downs, but sharp falls can still cause unease. A clear plan and periodic check-ins should keep decisions on track.",
+    "results.composure.high_heading": "Composure: High",
+    "results.composure.high_description": "{{client_name}} remains composed even in volatile markets and is unlikely to make rash decisions during a downturn. This supports a steady, long-term investment approach."
+  }
+}

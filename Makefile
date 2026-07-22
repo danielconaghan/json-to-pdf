@@ -18,7 +18,7 @@ IMAGE    ?= pdfgen-api
 ACCOUNT   = $(shell aws sts get-caller-identity --query Account --output text)
 ECR_REPO  = $(ACCOUNT).dkr.ecr.$(REGION).amazonaws.com/$(IMAGE)
 
-.PHONY: build push deploy plan test local local-up local-deploy local-endpoint local-test local-down
+.PHONY: build push deploy plan test ui ui-down ui-host local local-up local-deploy local-endpoint local-test local-down
 
 build:
 	docker build --platform $(PLATFORM) -t $(IMAGE):$(TAG) .
@@ -37,6 +37,21 @@ plan:
 
 test:
 	python -m pytest
+
+# Web UI (build a config, preview the real PDF) in a container — nothing
+# installed on the host. Serves http://localhost:8000.
+ui:
+	docker compose up --build
+
+ui-down:
+	docker compose down
+
+# Host fallback: run the UI directly with a local Python + the `ui` extra
+# (pip install -e '.[ui]'). Binds localhost; pass HOST=0.0.0.0 for LAN access.
+ui-host: HOST ?= 127.0.0.1
+ui-host: PORT ?= 8000
+ui-host:
+	python -m webui --host $(HOST) --port $(PORT) --reload
 
 # ── Local development against the ministack emulator ────────────────────────
 # Requires the terraform-ministack repo checked out as a sibling directory
